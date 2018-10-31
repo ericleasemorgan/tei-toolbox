@@ -1,0 +1,11 @@
+	<div type='colophon'>
+		<head>
+			Colophon
+		</head>
+		<p>This file was originally marked up using the Text Encoding Initiative XML markup language for use in the Infomotions Alex Catalog of Electronic Texts (<xref url='http://infomotions.com/alex/'>http://infomotions.com/alex/</xref>) by Eric Lease Morgan on ##DATECREATED## for the purpose of freely sharing, distributing, and making available works of great literature. It's Infomotions unique identifier is ##IDENTIFIER##.</p>
+		<p rend='center'><figure url='http://infomotions.com/logo.gif' rend='center'>
+		<lb />
+		<figDesc>Infomotions Man says, "Give back to the 'Net."</figDesc>
+		</figure>
+		</p>
+	</div>

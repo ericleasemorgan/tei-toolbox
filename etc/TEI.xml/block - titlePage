@@ -1,0 +1,27 @@
+	<titlePage>
+		<docTitle>
+			<titlePart>
+				##TITLE##
+			</titlePart>
+		</docTitle>
+		<byline>
+			Written in ##DISPLAYDATE## by 
+			<docAuthor>
+				##CREATOR##
+			</docAuthor>
+			##CREATORDATES##
+		</byline>
+		<docImprint>
+			This version originally published in 
+			<docDate>
+				##YEARPUBLISHED##
+			</docDate>
+			by 
+			<publisher>
+				##PUBLISHER##
+			</publisher>
+		</docImprint>
+		<imprimatur>
+			##RIGHTS##
+		</imprimatur>
+	</titlePage>
