@@ -1,1 +1,1 @@
-<div type='chapter' n='#CLIPBOARD#' id='#script time.scpt#'>#SELSTART##SELECT##SELEND#</div>
+<div type='chapter' n='#CLIPBOARD#'>#SELSTART##SELECT##SELEND#</div>
