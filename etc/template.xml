@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<TEI>
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>##TITLE##</title> 
+        <author>##AUTHOR##</author>
+        <respStmt>
+          <resp>converted into TEI-conformant markup by</resp>
+          <name>Eric Lease Morgan</name>
+        </respStmt>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>Infomotions, LLC</publisher>
+        <address>
+        	<addrLine>eric_morgan@infomotions.com</addrLine>
+        </address>
+        <idno type='elm'>##IDNO</idno>
+        <availability status='free'>
+          <p>##LICENSE##</p>
+        </availability>
+      </publicationStmt>
+      <sourceDesc>
+        <p>##DESCRIPTION##</p>
+      </sourceDesc>
+    </fileDesc>
+    <profileDesc>
+      <creation>
+        <date>##YYYY-MM-DD##</date>
+      </creation>
+    </profileDesc>
+  </teiHeader>
+  <text>
+    <front />
+    <body>
+		<p>Hello, World!</p>
+    </body>
+    <back />
+  </text>
+</TEI>
