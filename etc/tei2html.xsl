@@ -8,7 +8,7 @@
 	  doctype-public='-//W3C//DTD XHTML 1.0 Transitional//EN' 
 	  doctype-system='http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd' />
   	
-	<xsl:template match='TEI.2'>
+	<xsl:template match='TEI'>
 		<html>
 		
 			<head>
@@ -36,15 +36,15 @@
 
 				<!-- "title" page -->
 				<h1><xsl:value-of select='teiHeader/fileDesc/titleStmt/title' /></h1>
-				<p><xsl:value-of select='/TEI.2/text/front/titlePage/byline' /></p>
-				<p><xsl:value-of select='/TEI.2/text/front/titlePage/docImprint' /><xsl:value-of select='/TEI.2/text/front/titlePage/imprimatur' /></p>
+				<p><xsl:value-of select='/TEI/text/front/titlePage/byline' /></p>
+				<p><xsl:value-of select='/TEI/text/front/titlePage/docImprint' /><xsl:value-of select='/TEI/text/front/titlePage/imprimatur' /></p>
 				<hr />
 
 				<!-- cool table of contents -->
-				<xsl:if test='/TEI.2/text/body/div'>
+				<xsl:if test='/TEI/text/body/div'>
 					<h2>Table of contents</h2>
 					<p>
-					<xsl:for-each select="/TEI.2/text/*/div">
+					<xsl:for-each select="/TEI/text/*/div">
 						<xsl:if test='./@type != "colophon"'>
 						<a><xsl:attribute name="href">#<xsl:value-of select='./@id' /></xsl:attribute><xsl:value-of select='./head' /></a><br />
 						</xsl:if>
