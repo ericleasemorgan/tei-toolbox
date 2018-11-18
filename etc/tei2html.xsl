@@ -1,6 +1,15 @@
 <?xml version='1.0'?>
 <xsl:stylesheet xmlns:xsl='http://www.w3.org/1999/XSL/Transform' version='1.0'>
 
+<!--
+
+    tei2htm.xsl - transform TEI file to simple HTML file
+	
+    Eric Lease Morgan (eric_morgan@infomotions.com)
+    August 18, 2005
+
+-->
+
 	<xsl:output 
 	  method='xml'
 	  omit-xml-declaration='no'
@@ -16,28 +25,189 @@
 				<!-- title tag -->
 				<title> 
 					<xsl:for-each select="teiHeader/fileDesc/titleStmt/title">
+						<xsl:if test='./@type = "main"'>
 							<xsl:value-of select='.' />
+						</xsl:if>
 					</xsl:for-each>
 					<xsl:text> / </xsl:text>
 					<xsl:for-each select="teiHeader/fileDesc/titleStmt/author/name">
+						<xsl:if test='./@type = "main"'>
 							<xsl:value-of select='.' />
+						</xsl:if>
 					</xsl:for-each>
 					<xsl:text> </xsl:text>
 					<xsl:value-of select="teiHeader/fileDesc/titleStmt/author/dateRange"/>
 				</title> 
 	
+				<xsl:comment>Dublin Core elements</xsl:comment>
+
+				<!-- title -->
+				<xsl:for-each select="teiHeader/fileDesc/titleStmt/title">
+					<xsl:if test='./@type = "main"'>
+						<meta>
+							<xsl:attribute name='name'>title</xsl:attribute>
+							<xsl:attribute name='content'><xsl:value-of select='.' /></xsl:attribute>
+						</meta>
+					</xsl:if>
+				</xsl:for-each>
+	
+				<!-- creator -->
+				<meta>
+					<xsl:attribute name='name'>creator</xsl:attribute>
+					<xsl:for-each select="teiHeader/fileDesc/titleStmt/author/name">
+						<xsl:if test='./@type = "main"'>
+							<xsl:attribute name='content'><xsl:value-of select='.' /></xsl:attribute>
+						</xsl:if>
+					</xsl:for-each>
+				</meta>
+	
+				<!-- subjects -->
+				<xsl:for-each select='teiHeader/profileDesc/textClass/keywords/list/item'>
+					<meta>
+						<xsl:attribute name='name'>subject</xsl:attribute>
+						<xsl:attribute name='content'><xsl:value-of select='normalize-space(.)' /></xsl:attribute>
+					</meta>
+				 </xsl:for-each>
+        
+				<!-- description -->
+				<xsl:for-each select="/TEI/teiHeader/fileDesc/notesStmt/note">
+					<xsl:if test='./@type = "description"'>
+						<meta>
+							<xsl:attribute name='name'>description</xsl:attribute>
+							<xsl:attribute name='content'><xsl:value-of select='.' /></xsl:attribute>
+						</meta>
+					</xsl:if>
+				</xsl:for-each>					
+	
+				<!-- publisher -->
+				<meta>
+					<xsl:attribute name='name'>publisher</xsl:attribute>
+					<xsl:attribute name='content'><xsl:value-of select='normalize-space(teiHeader/fileDesc/publicationStmt/publisher)' /></xsl:attribute>
+				</meta>
+	
+				<!-- contributor -->
+				<xsl:for-each select="teiHeader/fileDesc/titleStmt/respStmt/name">
+					<xsl:if test='./@type = "contributor"'>
+						<meta>
+							<xsl:attribute name='name'>contributor</xsl:attribute>
+							<xsl:attribute name='content'><xsl:value-of select='.' /></xsl:attribute>
+						</meta>
+					</xsl:if>
+				</xsl:for-each>					
+
+				<!-- date -->
+				<meta>
+					<xsl:attribute name='name'>date</xsl:attribute>
+					<xsl:attribute name='content'><xsl:value-of select='normalize-space(teiHeader/profileDesc/creation/date)' /></xsl:attribute>
+				</meta>
+	
+				<!-- type -->
+				<meta>
+					<xsl:attribute name='name'>type</xsl:attribute>
+					<xsl:attribute name='content'>Text</xsl:attribute>
+				</meta>
+	
+				<!-- format -->
+				<meta>
+					<xsl:attribute name='name'>format</xsl:attribute>
+					<xsl:attribute name='content'>text/html</xsl:attribute>
+				</meta>
+	
+				<!-- identifier -->
+				<meta>
+					<xsl:attribute name='name'>identifier</xsl:attribute>
+					<xsl:attribute name='content'><xsl:value-of select='normalize-space(teiHeader/fileDesc/publicationStmt/idno)' /></xsl:attribute>
+				</meta>
+	
+				<!-- source -->
+				<meta>
+					<xsl:attribute name='name'>source</xsl:attribute>
+					<xsl:attribute name='content'>
+						<xsl:for-each select="/TEI/teiHeader/fileDesc/sourceDesc/bibl/xptr/@url"><xsl:value-of select='normalize-space(.)'/></xsl:for-each>
+					</xsl:attribute>
+				</meta>
+	
+				<!-- language -->
+				<meta>
+					<xsl:attribute name='name'>language</xsl:attribute>
+					<xsl:attribute name='content'><xsl:value-of select='normalize-space(teiHeader/profileDesc/langUsage/language)' /></xsl:attribute>
+				</meta>
+	
+				<!-- relation -->
+				<meta>
+					<xsl:attribute name='name'>relation</xsl:attribute>
+					<xsl:attribute name='content'>http://infomotions.com/alex/</xsl:attribute>
+				</meta>
+	
+				<!-- coverage -->
+				
+				<!-- rights -->
+				<meta>
+					<xsl:attribute name='name'>rights</xsl:attribute>
+					<xsl:attribute name='content'><xsl:value-of select='normalize-space(teiHeader/fileDesc/publicationStmt/availability/p)' /></xsl:attribute>
+				</meta>
+				
+				<xsl:comment>Alex Catalogue metadata elements</xsl:comment>
+
+				<!-- sort author -->
+				<meta>
+					<xsl:attribute name='name'>sort_creator</xsl:attribute>
+					<xsl:for-each select="teiHeader/fileDesc/titleStmt/author/name">
+						<xsl:if test='./@type = "sort"'>
+							<xsl:attribute name='content'><xsl:value-of select='.' /></xsl:attribute>
+						</xsl:if>
+					</xsl:for-each>
+				</meta>
+	
+	
+				<!-- sort title -->
+				<meta>
+					<xsl:attribute name='name'>sort_title</xsl:attribute>
+					<xsl:for-each select="teiHeader/fileDesc/titleStmt/title">
+						<xsl:if test='./@type = "sort"'>
+							<xsl:attribute name='content'><xsl:value-of select='.' /></xsl:attribute>
+						</xsl:if>
+					</xsl:for-each>
+				</meta>
+	
+				<!-- title tag, again -->
+				<meta>
+					<xsl:attribute name='name'>brief</xsl:attribute>
+					<xsl:attribute name='content'>
+										<xsl:for-each select="teiHeader/fileDesc/titleStmt/title">
+						<xsl:if test='./@type = "main"'>
+							<xsl:value-of select='.' />
+						</xsl:if>
+					</xsl:for-each>
+					<xsl:text> / </xsl:text>
+					<xsl:for-each select="teiHeader/fileDesc/titleStmt/author/name">
+						<xsl:if test='./@type = "main"'>
+							<xsl:value-of select='.' />
+						</xsl:if>
+					</xsl:for-each>
+					<xsl:text> </xsl:text>
+					<xsl:value-of select="teiHeader/fileDesc/titleStmt/author/dateRange"/>
+
+					</xsl:attribute>
+				</meta>
+	
+				<!-- date -->
+				<meta>
+					<xsl:attribute name='name'>sort_date</xsl:attribute>
+					<xsl:attribute name='content'><xsl:value-of select='normalize-space(teiHeader/profileDesc/creation/date/@value)' /></xsl:attribute>
+				</meta>
+	
+				<style type='text/css'>h1, h2, h3, h4, h5, h6 { font-family : sans-serif; }
+				p.fiction { margin-top: 0em; margin-bottom: 0em;}</style>
 				
 			</head>
 			
-			<body>
+			<body style='margin:5%;'>
 				
-    <!-- content -->
-    <div>
-
 				<!-- "title" page -->
-				<h1><xsl:value-of select='teiHeader/fileDesc/titleStmt/title' /></h1>
-				<p><xsl:value-of select='/TEI/text/front/titlePage/byline' /></p>
-				<p><xsl:value-of select='/TEI/text/front/titlePage/docImprint' /><xsl:value-of select='/TEI/text/front/titlePage/imprimatur' /></p>
+				<h1 style='text-align:center'><xsl:value-of select='teiHeader/fileDesc/titleStmt/title' /></h1>
+				<p style='text-align:center'><xsl:value-of select='/TEI/text/front/titlePage/byline' /></p>
+				<p style='text-align:center'><xsl:value-of select='/TEI/text/front/titlePage/docImprint' /><xsl:value-of select='/TEI/text/front/titlePage/imprimatur' /></p>
 				<hr />
 
 				<!-- cool table of contents -->
@@ -55,8 +225,6 @@
 				<!-- do the heavy lifting -->
 				<xsl:apply-templates/>
 						
-    </div>
-
 			</body>
 			
 		</html>
@@ -84,6 +252,68 @@
 		<xsl:apply-templates />
 	</xsl:template>
 
+	<!-- division #2 (div2) -->
+	<xsl:template match="div2">
+		<h3><xsl:value-of select='./@type' /><xsl:text> </xsl:text><xsl:value-of select='./@n' /><xsl:text>. </xsl:text><xsl:value-of select='./head' /></h3>
+		<xsl:apply-templates />
+	</xsl:template>
+
+	<!-- division #3 (div3) -->
+	<xsl:template match="div3">
+		<h4><xsl:value-of select='./@type' /><xsl:text> </xsl:text><xsl:value-of select='./@n' /><xsl:text>. </xsl:text><xsl:value-of select='./head' /></h4>
+		<xsl:apply-templates />
+	</xsl:template>
+
+	<!-- division #4 (div4) -->
+	<xsl:template match="div4">
+		<h5><xsl:value-of select='./@type' /><xsl:text> </xsl:text><xsl:value-of select='./@n' /><xsl:text>. </xsl:text><xsl:value-of select='./head' /></h5>
+		<xsl:apply-templates />
+	</xsl:template>
+
+	<!-- division #5 (div5) -->
+	<xsl:template match="div5">
+		<h6><xsl:value-of select='./@type' /><xsl:text> </xsl:text><xsl:value-of select='./@n' /><xsl:text>. </xsl:text><xsl:value-of select='./head' /></h6>
+		<xsl:apply-templates />
+	</xsl:template>
+
+	<!-- images (figure) -->
+	<xsl:template match="figure">
+	<img>
+	<xsl:attribute name='src'><xsl:value-of select='./@url' /></xsl:attribute>
+	<xsl:choose>
+	<xsl:when test='./figDesc'>
+		<xsl:attribute name='alt'><xsl:value-of select='normalize-space(./figDesc)' /></xsl:attribute>
+	</xsl:when>
+	<xsl:otherwise>
+			<xsl:attribute name='alt'><xsl:value-of select='./@url' /></xsl:attribute>
+	</xsl:otherwise>
+	</xsl:choose>
+	<xsl:choose>
+		<xsl:when test='./@rend = "top"'>
+		<xsl:attribute name='align'><xsl:value-of select='./@rend' /></xsl:attribute>
+		</xsl:when>
+		<xsl:when test='./@rend = "middle"'>
+		<xsl:attribute name='align'><xsl:value-of select='./@rend' /></xsl:attribute>
+		</xsl:when>
+		<xsl:when test='./@rend = "bottom"'>
+		<xsl:attribute name='align'><xsl:value-of select='./@rend' /></xsl:attribute>
+		</xsl:when>
+		<xsl:when test='./@rend = "left"'>
+		<xsl:attribute name='align'><xsl:value-of select='./@rend' /></xsl:attribute>
+		</xsl:when>
+		<xsl:when test='./@rend = "right"'>
+		<xsl:attribute name='align'><xsl:value-of select='./@rend' /></xsl:attribute>
+		</xsl:when>
+		<xsl:otherwise />
+	</xsl:choose>
+	</img>
+	<xsl:apply-templates/>
+	</xsl:template>
+
+	<!-- figure description (figDesc) -->
+	<xsl:template match='figDesc'>
+	<span class='caption'><xsl:apply-templates/></span>
+	</xsl:template>
 	
 	<!-- line break (lb) -->
 	<xsl:template match='lb'>
@@ -118,7 +348,7 @@
 
 	<!-- line group (lg) -->
 	<xsl:template match="lg">
-		<p style='margin-left: 2em'><xsl:apply-templates /></p>
+		<p><xsl:apply-templates /></p>
 	</xsl:template>
 
 	<!-- line (l) -->

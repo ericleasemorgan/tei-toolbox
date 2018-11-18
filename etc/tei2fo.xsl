@@ -61,11 +61,11 @@
 		</fo:block>
 		
 		<!-- cool table of contents -->
-		<xsl:if test='/TEI/text/body/div1'>
+		<xsl:if test='/TEI/text/*/div'>
 				<fo:block font-size='16pt' font-family='sans-serif' font-weight='bold' space-before='5em' space-after='1em' break-before='odd-page'>
 					<xsl:text>Table of contents</xsl:text>
 				</fo:block>
-			<xsl:for-each select="/TEI/text/*/div1">
+			<xsl:for-each select="/TEI/text/*/div">
 				<xsl:if test='./@type != "colophon"'>
 					<fo:block font-size='10pt' font-family='serif'>
 						<xsl:value-of select='./head' />
@@ -108,7 +108,7 @@
 				</fo:block>
 			</xsl:when>
 			<xsl:otherwise>
-				<fo:block>
+				<fo:block space-after='1em' space-before='1em'>
 					<xsl:apply-templates />
 				</fo:block>
 			</xsl:otherwise>
@@ -128,7 +128,7 @@
 		<xsl:apply-templates />
 	</xsl:template>
 
- 	<xsl:template match="div1">
+ 	<xsl:template match="div">
 		<fo:block font-size='16pt' font-family='sans-serif' font-weight='bold'  space-before='5em' space-after='1em'  break-before='odd-page'>
 			<xsl:value-of select='./head' />
 		</fo:block>
