@@ -216,7 +216,7 @@
 					<p>
 					<xsl:for-each select="/TEI/text/*/div">
 						<xsl:if test='./@type != "colophon"'>
-						<a><xsl:attribute name="href">#<xsl:value-of select='./@id' /></xsl:attribute><xsl:value-of select='./head' /></a><br />
+						<a><xsl:attribute name="href">#<xsl:value-of select='./@xml:id' /></xsl:attribute><xsl:value-of select='./head' /></a><br />
 						</xsl:if>
 					</xsl:for-each>
 					</p>
@@ -248,7 +248,7 @@
 				<hr />
 			</xsl:when>
 		</xsl:choose>
-		<h2><a><xsl:attribute name="name"><xsl:value-of select='./@id' /></xsl:attribute><xsl:value-of select='./head' /></a></h2>
+		<h2><a><xsl:attribute name="name"><xsl:value-of select='./@xml:id' /></xsl:attribute><xsl:value-of select='./head' /></a></h2>
 		<xsl:apply-templates />
 	</xsl:template>
 
