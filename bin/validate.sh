@@ -5,6 +5,7 @@
 DTD="./etc/tei.dtd"
 
 ID=$1
+ID=$( basename $ID .xml)
 
 
 TEI="./tei/$ID.xml"

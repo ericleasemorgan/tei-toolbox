@@ -7,6 +7,7 @@ FOP='/Applications/fop/fop'
 HOME=$( pwd )
 
 ID=$1
+ID=$( basename $ID .xml)
 
 TEI="./tei/$ID.xml"
 FO="$HOME/fo/$ID.fo"
