@@ -1,50 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TEI>
-	<teiHeader>
-		<fileDesc>
-			<titleStmt>
-				<title>
-					The Odyssey
-				</title>
-				<author>
-					Homer
-				</author>
-				<respStmt>
-					<resp>
-						converted into TEI-conformant markup by
-					</resp>
-					<name>
-						Eric Lease Morgan
-					</name>
-				</respStmt>
-			</titleStmt>
-			<publicationStmt>
-				<publisher>
-					Infomotions, LLC
-				</publisher>
-				<address>
-					<addrLine>
-						eric_morgan@infomotions.com
-					</addrLine>
-				</address>
-				<idno type='elm'>
-					home-odyssey
-				</idno>
-			</publicationStmt>
-			<sourceDesc>
-				<p rend='fiction'>
-					The markup of this text is based on copy of same title from Project Gutenberg ([EBook #1727]) at http://www.gutenberg.org/cache/epub/1727/pg1727.txt"
-				</p>
-			</sourceDesc>
-		</fileDesc>
-		<profileDesc>
-			<creation>
-				<date>
-					2018-11-20
-				</date>
-			</creation>
-		</profileDesc>
-	</teiHeader>
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>The Odyssey</title>
+        <author>Homer</author>
+        <respStmt>
+          <resp>converted into TEI-conformant markup by</resp>
+          <name>Eric Lease Morgan</name>
+        </respStmt>
+      </titleStmt>
+      <publicationStmt>
+        <publisher>Infomotions, LLC</publisher>
+        <address>
+          <addrLine>eric_morgan@infomotions.com</addrLine>
+        </address>
+        <idno type="elm">home-odyssey</idno>
+      </publicationStmt>
+      <sourceDesc>
+        <p rend="fiction">The markup of this text is based on copy of same title from Project Gutenberg ([EBook #1727]) at http://www.gutenberg.org/cache/epub/1727/pg1727.txt"</p>
+      </sourceDesc>
+    </fileDesc>
+    <profileDesc>
+      <creation>
+        <date>2018-11-20</date>
+      </creation>
+    </profileDesc>
+  </teiHeader>
   <text>
     <front>
       <titlePage>

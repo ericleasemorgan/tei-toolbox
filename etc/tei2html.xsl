@@ -276,8 +276,8 @@
 		<xsl:apply-templates />
 	</xsl:template>
 
-	<!-- images (figure) -->
-	<xsl:template match="figure">
+	<!-- images (graphic) -->
+	<xsl:template match="graphic">
 	<img>
 	<xsl:attribute name='src'><xsl:value-of select='./@url' /></xsl:attribute>
 	<xsl:choose>
@@ -308,6 +308,11 @@
 	</xsl:choose>
 	</img>
 	<xsl:apply-templates/>
+	</xsl:template>
+
+	<!-- images (graphic) -->
+	<xsl:template match="figure">
+		<xsl:apply-templates/>
 	</xsl:template>
 
 	<!-- figure description (figDesc) -->

@@ -61,7 +61,7 @@
 		</fo:block>
 		
 		<!-- cool table of contents -->
-		<xsl:if test='/TEI/text/*/div'>
+		<xsl:if test='/TEI/text/body/div'>
 				<fo:block font-size='16pt' font-family='sans-serif' font-weight='bold' space-before='5em' space-after='1em' break-before='odd-page'>
 					<xsl:text>Table of contents</xsl:text>
 				</fo:block>
