@@ -1,0 +1,55 @@
+body {
+	font-family: Arial;
+	font-size: small;
+	margin: .25in;
+}
+
+img { border: none }
+a { text-decoration: none }
+a:link { color: black }
+a:visited { color: black }
+
+#navlist { display: none }
+
+.menu { display: none }
+
+.footer {
+	border-top: 1px solid #778;
+	margin-top: 1em;
+	font-size: small;
+}
+
+.footer li { list-style: none }
+
+blockquote { font-size: small }
+
+p.fiction {
+	margin-top: 0em;
+	margin-bottom: 0em;
+}
+
+.persName { font-weight: bold }
+
+div.lg { margin-bottom: 1.5em; }
+
+div.lg_indent {
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
+	margin-left: 5em;
+}
+
+span.line { display:block; }
+
+span.line_indent {
+	display:block;
+	text-indent: 2em;
+}
+
+.caption { font-size: small }
+
+p.initial:first-letter {
+	font-size: 150%;
+	float: left;
+}
+
+.details { display: none }

@@ -1,0 +1,128 @@
+body {
+	margin-left: 5%;
+	margin-right: 5%;
+	margin-top: 5%;
+	font-family: Arial;
+}
+
+#navlist {
+	padding: 3px 0;
+	margin-left: 0;
+	border-bottom: 1px solid #778;
+	text-align: center;
+}
+
+#navlist li {
+	list-style: none;
+	margin: 0;
+	display: inline;
+}
+
+#navlist li a
+{
+	padding: 3px 0.5em;
+	margin-left: 3px;
+	border: 1px solid #778;
+	border-bottom: none;
+	background: #DDE;
+	text-decoration: none;
+}
+
+#navlist li a:link { color: #448; }
+
+#navlist li a:visited { color: #667; }
+
+#navlist li a:hover
+{
+	color: #000;
+	background: #AAE;
+	border-color: #227;
+}
+
+#navlist li a#current
+{
+	background: white;
+	border-bottom: 1px solid white;
+}
+
+.details {
+	float: right;
+	padding-left: 1em;
+	padding-right: 1em;
+	text-align: right;
+	width: 20%;
+	font-size: small;
+	border: 1px solid #778;
+	margin: 1em;
+
+}
+
+.menu {
+	float: left;
+	padding-right: 10px;
+	text-align: right;
+	width: 18%;
+	font-size: small;
+}
+
+.menu li {
+	list-style: none;
+	font-size: small;
+}
+
+.menu h1 { font-size: small }
+
+
+.content {
+	margin-left: 23%;
+	text-align: left;
+}
+
+.footer {
+	border-top: 1px solid #778;
+	margin-top: 1em;
+	text-align: left;
+	font-size: small;
+}
+
+.footer li {
+	list-style: none;
+	margin-left: 3%;
+}
+
+.detaillist {
+	font-size: small;
+	margin-bottom: 1em;
+}
+
+blockquote { font-size: small }
+
+p.fiction {
+	margin-top: 0em;
+	margin-bottom: 0em;
+}
+
+.persName { font-weight: bold }
+
+div.lg { margin-bottom: 1.5em; }
+
+div.lg_indent {
+	margin-top: 1.5em;
+	margin-bottom: 1.5em;
+	margin-left: 5em;
+}
+
+span.line { display:block; }
+
+span.line_indent {
+	display:block;
+	text-indent: 2em;
+}
+
+.caption { font-size: small }
+
+p.initial:first-letter {
+	font-size: 150%;
+	float: left;
+}
+
