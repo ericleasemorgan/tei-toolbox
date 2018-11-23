@@ -3,8 +3,12 @@
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title>The Pioneers or, The Sources of the Susquehanna: A Descriptive Tale</title>
-        <author>James Fenimore Cooper</author>
+        <title type='main'>The Pioneers or, The Sources of the Susquehanna: A Descriptive Tale</title>
+        <title type='sort'>Pioneers or, The Sources of the Susquehanna: A Descriptive Tale</title>
+        <author>
+        <name type='main'>James Fenimore Cooper</name>
+         <name type='sort'>Cooper, James Fenimore</name>
+       </author>
         <respStmt>
           <resp>converted into TEI-conformant markup by</resp>
           <name>Eric Lease Morgan</name>
@@ -23,7 +27,7 @@
     </fileDesc>
     <profileDesc>
       <creation>
-        <date>2018-11-15</date>
+        <date when="1823">1823</date>
       </creation>
     </profileDesc>
   </teiHeader>

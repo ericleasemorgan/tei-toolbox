@@ -3,8 +3,12 @@
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title>The Last of the Mohicans: A Narrative of 1757</title>
-        <author>James Fenimore Cooper</author>
+        <title type='main'>The Last of the Mohicans: A Narrative of 1757</title>
+        <title type='sort'>Last of the Mohicans: A Narrative of 1757</title>
+        <author>
+        <name type='main'>James Fenimore Cooper</name>
+         <name type='sort'>Cooper, James Fenimore</name>
+       </author>
         <respStmt>
           <resp>converted into TEI-conformant markup by</resp>
           <name>Eric Lease Morgan</name>
@@ -23,7 +27,7 @@
     </fileDesc>
     <profileDesc>
       <creation>
-        <date>2018-10-30</date>
+        <date when="1826">1826</date>
       </creation>
     </profileDesc>
   </teiHeader>

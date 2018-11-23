@@ -3,8 +3,12 @@
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title>The Prairie</title>
-        <author>James Fenimore Cooper</author>
+        <title type='main'>The Prairie</title>
+        <title type='sort'>Prairie</title>
+        <author>
+        <name type='main'>James Fenimore Cooper</name>
+         <name type='sort'>Cooper, James Fenimore</name>
+       </author>
         <respStmt>
           <resp>converted into TEI-conformant markup by</resp>
           <name>Eric Lease Morgan</name>
@@ -23,7 +27,7 @@
     </fileDesc>
     <profileDesc>
       <creation>
-        <date>2018-11-17</date>
+        <date when="1827">1827</date>
       </creation>
     </profileDesc>
   </teiHeader>

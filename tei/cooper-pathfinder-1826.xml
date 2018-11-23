@@ -3,8 +3,12 @@
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title>The Pathfinder or, The Inland Sea</title>
-        <author>James Fenimore Cooper</author>
+        <title type='main'>The Pathfinder or, The Inland Sea</title>
+        <title type='sort'>Pathfinder or, The Inland Sea</title>
+        <author>
+        <name type='main'>James Fenimore Cooper</name>
+         <name type='sort'>Cooper, James Fenimore</name>
+       </author>
         <respStmt>
           <resp>converted into TEI-conformant markup by</resp>
           <name>Eric Lease Morgan</name>
@@ -23,7 +27,7 @@
     </fileDesc>
     <profileDesc>
       <creation>
-        <date>2018-11-14</date>
+        <date when="1826">1826</date>
       </creation>
     </profileDesc>
   </teiHeader>

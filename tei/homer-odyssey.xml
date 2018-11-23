@@ -3,8 +3,12 @@
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title>The Odyssey</title>
-        <author>Homer</author>
+        <title type='main'>The Odyssey</title>
+        <title type='sort'>Odyssey</title>
+        <author>
+        	<name type='main'>Homer</name>
+        	<name type='sort'>Homer</name>
+    	</author>
         <respStmt>
           <resp>converted into TEI-conformant markup by</resp>
           <name>Eric Lease Morgan</name>
@@ -15,7 +19,7 @@
         <address>
           <addrLine>eric_morgan@infomotions.com</addrLine>
         </address>
-        <idno type="elm">home-odyssey</idno>
+        <idno type="elm">homer-odyssey-850</idno>
       </publicationStmt>
       <sourceDesc>
         <p rend="fiction">The markup of this text is based on copy of same title from Project Gutenberg ([EBook #1727]) at http://www.gutenberg.org/cache/epub/1727/pg1727.txt"</p>
@@ -23,7 +27,7 @@
     </fileDesc>
     <profileDesc>
       <creation>
-        <date>2018-11-20</date>
+        <date when="-850">850 BC</date>
       </creation>
     </profileDesc>
   </teiHeader>

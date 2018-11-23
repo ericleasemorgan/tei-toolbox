@@ -3,8 +3,12 @@
   <teiHeader>
     <fileDesc>
       <titleStmt>
-        <title>Representative Men</title>
-        <author>Ralph Waldo Emerson</author>
+        <title type='main'>Representative Men</title>
+        <title type='sort'>Representative Men</title>
+        <author>
+        <name type='main'>Ralph Waldo Emerson</name>
+        <name type='sort'>Emerson, Ralph Waldo</name>
+        </author>
         <respStmt>
           <resp>converted into TEI-conformant markup by</resp>
           <name>Eric Lease Morgan</name>
@@ -23,7 +27,7 @@
     </fileDesc>
     <profileDesc>
       <creation>
-        <date>2018-10-28</date>
+        <date when="1849">1849</date>
       </creation>
     </profileDesc>
   </teiHeader>
