@@ -9,7 +9,7 @@
 
 # configure
 use constant ROWS       => 10;
-use constant SOLR       => 'http://localhost:8983/solr/documents';
+use constant SOLR       => 'http://localhost:8983/solr/study-carrel';
 use constant FACETFIELD => ( 'facet_did', 'facet_type', 'facet_entity', 'facet_lemma', 'facet_pos' );
 
 # require
@@ -102,8 +102,8 @@ for my $doc ( $response->docs ) {
 	# check for entities
 	if ( @lemmas ) {
 	
-		print "  lemmas: " . join( '; ', @lemmas ) . "\n";
-		print "     pos: " . join( '; ', @pos ) . "\n";
+		print "    lemmas: " . join( '; ', @lemmas ) . "\n";
+		print "       pos: " . join( '; ', @pos ) . "\n";
 		
 	}
 	

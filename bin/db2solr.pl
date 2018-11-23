@@ -8,9 +8,9 @@
 
 
 # configure
-use constant DATABASE    => './etc/documents.db';
+use constant DATABASE    => './etc/study-carrel.db';
 use constant DRIVER      => 'SQLite';
-use constant SOLR        => 'http://localhost:8983/solr/documents';
+use constant SOLR        => 'http://localhost:8983/solr/study-carrel';
 
 # require
 use DBI;

@@ -1,8 +1,13 @@
 .DS_Store
-links
+etc/documents.db
+etc/documents.sql
+etc/study-carrel.db
+etc/study-carrel.sql
 fo/
-txt/
 html/
+links
 pdf/
 trash/
-
+txt/
+study-carrel/
+todo/

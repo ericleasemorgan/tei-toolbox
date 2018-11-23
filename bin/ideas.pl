@@ -5,15 +5,17 @@
 
 # Eric Lease Morgan <eric_morgan@infomotions.com>
 # April 25, 2009 - first investigations; based on search.pl
+# November 22, 2018 - fixed call to both corpus and rank to include a directory
 
 
 # define
-use constant STOPWORDS => 'stopwords.inc';
-use constant IDEAS     => 'ideas.inc';
+use constant STOPWORDS => './etc/stopwords.txt';
+use constant IDEAS     => './etc/ideas.txt';
+use constant DIRECTORY => '/Users/eric/Desktop/study-carrel';
 
 # use/require
 use strict;
-require 'subroutines.pl';
+require './lib/subroutines.pl';
 
 # get the input
 my $q = lc( $ARGV[ 0 ] );
@@ -26,14 +28,14 @@ if ( ! $q ) {
 
 # index, sans stopwords
 my %index = ();
-foreach my $file ( &corpus ) { $index{ $file } = &index( $file, &slurp_words( STOPWORDS ) ) }
+foreach my $file ( &corpus( DIRECTORY ) ) { $index{ $file } = &index( $file, &slurp_words( STOPWORDS ) ) }
 
 # search
 my ( $hits, @files ) = &search( \%index, $q );
 print "Your search found $hits hit(s)\n";
 
 # rank
-my $ranks = &rank( \%index, [ @files ], $q );
+my $ranks = &rank( \%index, [ @files ], $q, DIRECTORY );
 
 # great idea coefficients
 my $coefficients = &great_ideas( \%index, [ @files ], &slurp_words( IDEAS ) );

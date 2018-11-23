@@ -7,9 +7,9 @@
 
 
 # configure
-DB='./etc/documents.db'
+DB='./etc/study-carrel.db'
 SCHEMA='./etc/schema.sql'
-SQL='./etc/documents.sql'
+SQL='./etc/study-carrel.sql'
 
 # do the work
 rm -rf $DB

@@ -10,14 +10,14 @@
 
 # define
 use constant STOPWORDS    => 'stopwords.inc';
-use constant LOWERBOUNDS  => .002;
+use constant LOWERBOUNDS  => .004;
 use constant NUMBEROFTAGS => 0;
-use constant DIRECTORY    => '/Users/emorgan/desktop/thoreau-emerson/corpus';
+use constant DIRECTORY    => '/Users/eric/desktop/study-carrel';
 
 # use/require
 use strict;
 use Lingua::StopWords qw( getStopWords );
-require 'subroutines.pl';
+require './lib/subroutines.pl';
 
 # initialize
 my @corpus = &corpus( DIRECTORY );

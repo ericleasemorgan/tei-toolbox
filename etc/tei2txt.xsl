@@ -16,10 +16,17 @@
 		<xsl:apply-templates />
 	</xsl:template>
 
-	<xsl:template match='text'>
-		<xsl:value-of select='.' />
+	<xsl:template match="teiHeader" />
+	<xsl:template match="text/front" />
+
+	<xsl:template match='body'>
+		<xsl:apply-templates />
 	</xsl:template>
 
-	<xsl:template match="teiHeader" />
+	<xsl:template match='p | head | lg | quote' >
+		<xsl:value-of select='.' /><xsl:text>&#10;</xsl:text>
+	</xsl:template>
+	
+	<xsl:template match="text/back" />
 
 </xsl:stylesheet>

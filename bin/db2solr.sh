@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # db2solr.sh - given a file name, run db2solr.pl
-# usage: find ./corpus -name *.txt -exec ./bin/db2solr.sh {} \;
+# usage: find /Users/eric/Desktop/study-carrel -name *.txt -exec ./bin/db2solr.sh {} \;
 
 # Eric Lease Morgan <eric_morgan@infomotions.com>
 # October 17, 2018 - first cut

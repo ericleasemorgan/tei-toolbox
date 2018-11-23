@@ -20,13 +20,13 @@
 
 
 # define
-use constant IDEAS     => 'ideas.inc';
-use constant DIRECTORY => '/Users/emorgan/desktop/thoreau-emerson/corpus';
+use constant IDEAS     => './etc/ideas.txt';
+use constant DIRECTORY => '/Users/eric/Desktop/emerson';
 
 # use/require
 use Lingua::StopWords qw( getStopWords );
 use strict;
-require 'subroutines.pl';
+require './lib/subroutines.pl';
 
 # initialize
 $|               = 1;

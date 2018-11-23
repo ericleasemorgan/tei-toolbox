@@ -8,8 +8,8 @@
 
 
 # configure
-use constant TEXTONE => '../corpus/emerson-address-728.txt';
-use constant TEXTTWO => '../corpus/emerson-american-729.txt';
+use constant TEXTONE => '/Users/eric/Desktop/study-carrel/plato-gorgias-687.txt';
+use constant TEXTTWO => '/Users/eric/Desktop/study-carrel/burroughs-tarzan-705.txt';
 use constant LENGTH  => 10;
 
 # require

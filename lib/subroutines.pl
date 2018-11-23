@@ -99,7 +99,7 @@ sub corpus {
 	my $directory = shift;
 	my @corpus = ();
 	
-	opendir( CWD, $directory ) or die "Can't opendir: $!";
+	opendir( CWD, $directory ) or die "Can't opendir ($directory): $!";
 	while ( my $file = readdir( CWD )) {
 	
 		if ( $file =~ /\.txt$/ ) { push @corpus, $directory . '/' . $file }

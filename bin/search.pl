@@ -12,12 +12,12 @@
 
 
 # define
-use constant DIRECTORY => '/Users/emorgan/desktop/thoreau-emerson/corpus';
+use constant DIRECTORY => '/Users/eric/Desktop/study-carrel';
 
 # use/require
 use strict;
 use Lingua::StopWords qw( getStopWords );
-require 'subroutines.pl';
+require './lib/subroutines.pl';
 
 # get the input
 my $q = lc( $ARGV[ 0 ] );
