@@ -1,13 +1,12 @@
 .DS_Store
-etc/documents.db
-etc/documents.sql
 etc/study-carrel.db
 etc/study-carrel.sql
+etc/study-carrel.vec
 fo/
 html/
 links
 pdf/
-trash/
-txt/
 study-carrel/
 todo/
+trash/
+txt/

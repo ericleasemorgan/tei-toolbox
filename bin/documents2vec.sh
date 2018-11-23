@@ -3,55 +3,38 @@
 # documents2vec.sh - a front-end to documents2vec.py
 
 # Eric Lease Morgan <eric_morgan@infomotions.com>
-# October 17, 2018 - first documentation; written on a plane from Madrid to Chicago; brain-dead
+# October  17, 2018 - first documentation; written on a plane from Madrid to Chicago; brain-dead
+# November 23, 2018 - added logic so a whole directory can be processed; baroque-en
 
 
-# configure
-INDEX='./bin/index.py'
+# configure 
+DIRECTORY='./study-carrel'
+DOCUMENTS2VEC='./bin/documents2vec.py'
+INDEX='./etc/study-carrel.vec'
 
-# initialize
-$INDEX new    ./corpus/cooper-last-1826.txt
+# initialize; obtuse
+rm -rf $INDEX
+FILES=( $DIRECTORY/*.txt )
 
-# update
-$INDEX update ./corpus/cooper-pioneers-1823.txt
-$INDEX update ./corpus/emerson-american-227.txt
-$INDEX update ./corpus/emerson-conservative-229.txt
-$INDEX update ./corpus/emerson-lecture-233.txt
-$INDEX update ./corpus/emerson-representative-201.txt
-$INDEX update ./corpus/emerson-transcendentalist-239.txt
-$INDEX update ./corpus/emerson-young-241.txt
-$INDEX update ./corpus/hawthorne-artist-458.txt
-$INDEX update ./corpus/hawthorne-great-466.txt
-$INDEX update ./corpus/hawthorne-scarlet-63.txt
-$INDEX update ./corpus/longfellow-hiawatha-1855.txt
-$INDEX update ./corpus/longfellow-paul-210.txt
-$INDEX update ./corpus/longfellow-village-211.txt
-$INDEX update ./corpus/melville-benito-104.txt
-$INDEX update ./corpus/melville-billy-105.txt
-$INDEX update ./corpus/melville-typee-107.txt
-$INDEX update ./corpus/thoreau-civil-182.txt
-$INDEX update ./corpus/thoreau-life-183.txt
-$INDEX update ./corpus/thoreau-plea-184.txt
-$INDEX update ./corpus/thoreau-slavery-185.txt
-$INDEX update ./corpus/thoreau-walden-186.txt
-$INDEX update ./corpus/twain-30-44.txt
-$INDEX update ./corpus/twain-adventures-27.txt
-$INDEX update ./corpus/twain-adventures-28.txt
-$INDEX update ./corpus/twain-extracts-32.txt
-$INDEX update ./corpus/twain-ghost-727.txt
-$INDEX update ./corpus/twain-great-34.txt
-$INDEX update ./corpus/twain-my-35.txt
-$INDEX update ./corpus/twain-new-36.txt
-$INDEX update ./corpus/twain-niagara-37.txt
-$INDEX update ./corpus/twain-political-38.txt
-$INDEX update ./corpus/twain-prince-30.txt
-$INDEX update ./corpus/twain-puddnhead-29.txt
-$INDEX update ./corpus/twain-tom-40.txt
-$INDEX update ./corpus/twain-tramp-41.txt
-$INDEX update ./corpus/twain-what-42.txt
+# process each item in the list of files; baroque and rococo 
+SIZE=${#FILES[@]}
+for (( I=1; I<$SIZE+1; I++ )); do
 
-# finish & done
-$INDEX finish ./foobar
+	if [[ $I -eq 1 ]]; then
+		COMMAND="$DOCUMENTS2VEC new ${FILES[$I-1]}"
+	elif [[ $I -lt $SIZE+1 ]]; then
+		COMMAND="$DOCUMENTS2VEC update ${FILES[$I-1]}"
+	fi
+  
+  	# debug and do the work
+  	echo "$I $COMMAND"
+  	$COMMAND
+  	
+done
+
+# close the index and done
+COMMAND="$DOCUMENTS2VEC finish fini"
+echo "$I $COMMAND"
+$COMMAND
 exit
-
 

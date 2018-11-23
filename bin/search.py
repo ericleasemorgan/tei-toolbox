@@ -7,7 +7,7 @@
 
 
 # configure
-INDEX = './etc/documents.vec'
+INDEX = './etc/study-carrel.vec'
 N     = 25
 
 # require

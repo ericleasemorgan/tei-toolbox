@@ -8,9 +8,9 @@
 
 # configure
 MODEL   = 'en'
-INDEX   = './etc/documents.vec'
+INDEX   = './etc/study-carrel.vec'
 MINIMUM = 2
-SIZE    = 300
+SIZE    = 125
 SG      = 1
 
 # require
