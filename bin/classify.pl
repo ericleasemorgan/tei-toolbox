@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 
-# classify.pl - list most significant words in a text
-#               based on http://en.wikipedia.org/wiki/Tfidf
+# classify.pl - list most significant words in a text; based on http://en.wikipedia.org/wiki/Tfidf
 
 # Eric Lease Morgan <eric_morgan@infomotions.com>
 # April 10, 2009 - first investigations; based on search.pl
@@ -9,10 +8,10 @@
 
 
 # define
-use constant STOPWORDS    => 'stopwords.inc';
-use constant LOWERBOUNDS  => .004;
+use constant LOWERBOUNDS  => .0035;
 use constant NUMBEROFTAGS => 0;
-use constant DIRECTORY    => '/Users/eric/desktop/study-carrel';
+use constant DIRECTORY    => './study-carrel';
+use constant EXTRAS       => ( 'upon', 'one', 'though' );
 
 # use/require
 use strict;
@@ -20,11 +19,15 @@ use Lingua::StopWords qw( getStopWords );
 require './lib/subroutines.pl';
 
 # initialize
-my @corpus = &corpus( DIRECTORY );
+my @corpus    = &corpus( DIRECTORY );
+my $stopwords = &getStopWords( 'en' );
+
+# update stopwords
+foreach ( EXTRAS ) { $$stopwords{ $_ } = 1 }
 
 # index, sans stopwords
 my %index = ();
-foreach my $file ( @corpus ) { $index{ $file } = &index( $file, &getStopWords( 'en' ) ) }
+foreach my $file ( @corpus ) { $index{ $file } = &index( $file, $stopwords ) }
 
 # classify (tag) each document
 my %terms = ();

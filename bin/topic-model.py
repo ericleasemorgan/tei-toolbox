@@ -11,7 +11,7 @@ TOPICS     = 3
 DIMENSIONS = 10
 ITERATIONS = 40
 DIRECTORY  = './study-carrel'
-EXTRAS     = [ 'one', 'like', 'would', 'upon', 'though', 'every', 'could', 'may', 'even', 'much', 'u', 'yet', 'still' ]
+EXTRAS     = [ 'upon', 'would', 'one', 'though' ]
 
 # require
 from gensim import corpora
@@ -29,7 +29,7 @@ def clean( document ):
 	features = document.lower()
 	features = [ feature for feature in features.split() if feature not in stopwords ]	
 	features = [ feature for feature in features if feature.isalpha() ]
-	#features = [ lemma.lemmatize( feature ) for feature in features ]
+	features = [ lemma.lemmatize( feature ) for feature in features ]
 	return features
 
 # initialize

@@ -4,7 +4,7 @@
 
 DB='./etc/study-carrel.db'
 POS='NOUN'
-LEMMA='woman'
+LEMMA='father'
 ENITY='PERSON'
 
 # count &amp; tabulate pos

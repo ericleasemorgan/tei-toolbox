@@ -10,7 +10,7 @@
 MODEL   = 'en'
 INDEX   = './etc/study-carrel.vec'
 MINIMUM = 2
-SIZE    = 125
+SIZE    = 200
 SG      = 1
 
 # require
