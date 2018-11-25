@@ -2,12 +2,11 @@
 etc/study-carrel.db
 etc/study-carrel.sql
 etc/study-carrel.vec
-fo/
-html/
 links
-pdf/
 study-carrel/
 todo/
-trash/
-txt/
-tei/
+txt/*.txt
+html/*.html
+tei/*.xml
+fo/*.fo
+pdf/*.pdf
