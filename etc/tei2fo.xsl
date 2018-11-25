@@ -137,9 +137,9 @@
 
 
 	<!-- images (figure) -->
-	<xsl:template match="figure">
+	<xsl:template match="graphic">
 	<fo:external-graphic space-before='2em'>
-	<xsl:attribute name='src'><xsl:text>url(</xsl:text>http://infomotions.com/<xsl:value-of select='@url'/><xsl:text>)</xsl:text></xsl:attribute>
+	<xsl:attribute name='src'><xsl:value-of select='@url'/></xsl:attribute>
 	</fo:external-graphic>
 				<fo:block space-before='1em'>
 				<xsl:apply-templates />

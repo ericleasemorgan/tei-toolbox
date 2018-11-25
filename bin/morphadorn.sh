@@ -2,12 +2,12 @@
 
 
 # configure
-TEI2HTML='./etc/tei2html.xsl'
+MORPHADORN='./bin/morphadorn.py'
 
 ID=$1
 ID=$( basename $ID .xml)
 
+XML="./xml/$ID.xml"
 TEI="./tei/$ID.xml"
-HTML="./html/$ID.html"
 
-xsltproc $TEI2HTML $TEI > $HTML
+$MORPHADORN $XML > $TEI
