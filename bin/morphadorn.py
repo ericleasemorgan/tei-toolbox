@@ -25,7 +25,7 @@ tei = etree.parse( sys.argv[ 1 ] )
 nlp = spacy.load( MODEL )
 
 # process each paragraph
-for paragraph in tei.xpath( '//body//p' ) :
+for paragraph in tei.xpath( '//body//p | //body//l' ) :
 
 	# re-initialize
 	document       = nlp( paragraph.text )
