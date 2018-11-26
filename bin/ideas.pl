@@ -11,7 +11,7 @@
 # define
 use constant STOPWORDS => './etc/stopwords.txt';
 use constant IDEAS     => './etc/ideas.txt';
-use constant DIRECTORY => '/Users/eric/Desktop/study-carrel';
+use constant DIRECTORY => './carrel';
 
 # use/require
 use strict;

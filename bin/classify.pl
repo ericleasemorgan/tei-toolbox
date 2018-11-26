@@ -8,10 +8,10 @@
 
 
 # define
-use constant LOWERBOUNDS  => .0035;
+use constant LOWERBOUNDS  => .005;
 use constant NUMBEROFTAGS => 0;
-use constant DIRECTORY    => './study-carrel';
-use constant EXTRAS       => ( 'upon', 'one', 'though' );
+use constant DIRECTORY    => './carrel';
+use constant EXTRAS       => ( 'upon', 'one', 'though', 'will', 'shall' );
 
 # use/require
 use strict;

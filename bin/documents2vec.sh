@@ -8,9 +8,9 @@
 
 
 # configure 
-DIRECTORY='./study-carrel'
+DIRECTORY='./carrel'
 DOCUMENTS2VEC='./bin/documents2vec.py'
-INDEX='./etc/study-carrel.vec'
+INDEX='./etc/carrel.vec'
 
 # initialize; obtuse
 rm -rf $INDEX

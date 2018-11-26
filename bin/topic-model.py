@@ -7,10 +7,10 @@
 
 
 # configure
-TOPICS     = 3
-DIMENSIONS = 10
+TOPICS     = 7
+DIMENSIONS = 3
 ITERATIONS = 40
-DIRECTORY  = './study-carrel'
+DIRECTORY  = './carrel'
 EXTRAS     = [ 'upon', 'would', 'one', 'though' ]
 
 # require

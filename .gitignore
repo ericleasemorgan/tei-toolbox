@@ -10,3 +10,5 @@ html/*.html
 tei/*.xml
 fo/*.fo
 pdf/*.pdf
+etc/carrel.*
+tmp/

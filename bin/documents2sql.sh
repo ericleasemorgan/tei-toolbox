@@ -7,8 +7,8 @@
 
 
 # configure
-SQL='./etc/study-carrel.sql'
-CORPUS='./study-carrel'
+SQL='./etc/carrel.sql'
+CORPUS='./carrel'
 DOCUMENTS2SQL='./bin/documents2sql.py'
 
 # do the work

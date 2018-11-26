@@ -12,7 +12,7 @@
 
 
 # define
-use constant DIRECTORY => './study-carrel';
+use constant DIRECTORY => './carrel';
 
 # use/require
 use strict;

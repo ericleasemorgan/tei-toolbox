@@ -21,7 +21,7 @@
 
 # define
 use constant IDEAS     => './etc/ideas.txt';
-use constant DIRECTORY => '/Users/eric/Desktop/emerson';
+use constant DIRECTORY => './carrel';
 
 # use/require
 use Lingua::StopWords qw( getStopWords );

@@ -2,10 +2,10 @@
 
 
 
-DB='./etc/study-carrel.db'
-POS='NOUN'
-LEMMA='father'
-ENITY='PERSON'
+DB='./etc/carrel.db'
+POS='ADJ'
+LEMMA='power'
+ENITY='LOC'
 
 # count &amp; tabulate pos
 echo "Parts-of-speech counts & tabulations"
