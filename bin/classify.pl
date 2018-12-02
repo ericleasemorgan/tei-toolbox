@@ -8,10 +8,11 @@
 
 
 # define
-use constant LOWERBOUNDS  => .005;
-use constant NUMBEROFTAGS => 0;
-use constant DIRECTORY    => './carrel';
+use constant LOWERBOUNDS  => .004;
 use constant EXTRAS       => ( 'upon', 'one', 'though', 'will', 'shall' );
+
+my $directory = $ARGV[ 0 ];
+if ( ! $directory ) { die "Usage $0 <directory>\n" }
 
 # use/require
 use strict;
@@ -19,7 +20,7 @@ use Lingua::StopWords qw( getStopWords );
 require './lib/subroutines.pl';
 
 # initialize
-my @corpus    = &corpus( DIRECTORY );
+my @corpus    = &corpus( $directory );
 my $stopwords = &getStopWords( 'en' );
 
 # update stopwords
@@ -35,7 +36,7 @@ foreach my $file ( @corpus ) {
 
 	my $tags = &classify( \%index, $file, [ @corpus ] );
 	my $found = 0;
-	my $directory = DIRECTORY;
+	my $directory = $directory;
 	
 	# list tags greater than a given score
 	foreach my $tag ( sort { $$tags{ $b } <=> $$tags{ $a } } keys %$tags ) {

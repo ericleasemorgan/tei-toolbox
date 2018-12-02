@@ -1,12 +1,12 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
-# compare.pl - calculate the sameness of two documents
-#              see: http://nlp.stanford.edu/IR-book/html/htmledition/dot-products-1.html
+# compare.pl - calculate the sameness of two documents; see: http://nlp.stanford.edu/IR-book/html/htmledition/dot-products-1.html
 
 # Eric Lease Morgan <eric_morgan@infomotions.com>
 # April 15, 2009 (Tax Day) - first cut
 # April 16, 2009           - abstracted; included great ideas; compared many documents
 # April 17, 2009           - moved compare to subroutines.pl
+# December 2, 2009         - gave command-line input
 
 # uses cosine similarity defined as:
 #   cos( ( a.b ) / ( ||a|| * ||b|| ) )
@@ -20,17 +20,20 @@
 
 
 # define
-use constant IDEAS     => './etc/ideas.txt';
-use constant DIRECTORY => './carrel';
+use constant IDEAS => './etc/ideas.txt';
 
 # use/require
 use Lingua::StopWords qw( getStopWords );
 use strict;
 require './lib/subroutines.pl';
 
+# sanity check
+my $directory = $ARGV[ 0 ];
+if ( ! $directory ) { die "Usage: $0 <directory>\n" }
+
 # initialize
 $|               = 1;
-my @corpus       = &corpus( DIRECTORY );
+my @corpus       = &corpus( $directory );
 my $ideas        = &slurp_words( IDEAS );
 my $stopwords    = &getStopWords( 'en' );
 my %comparisons = ();
@@ -59,7 +62,7 @@ for ( my $a = 0; $a <= $#corpus; $a++ ) {
 			my @books = sort( $corpus[ $a ], $corpus[ $b ] );
 			
 			# do the work; scores closer to 1000 approach similarity
-			my $score = int(( &compare( [ @books ], $stopwords, $ideas, DIRECTORY )) * 1000 );
+			my $score = int(( &compare( [ @books ], $stopwords, $ideas, $directory )) * 1000 );
 			$comparisons{ $corpus[ $a ] . ':' . $corpus[ $b ] } = $score;
 			print "\t", $score;
 			$index++;
@@ -76,7 +79,7 @@ for ( my $a = 0; $a <= $#corpus; $a++ ) {
 }
 
 # display sorted list of comparisons
-my $directory = DIRECTORY;
+my $directory = $directory;
 foreach ( sort { $comparisons{ $b } <=> $comparisons{ $a } } keys %comparisons ) {
 
 	my $key = $_;
