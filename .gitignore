@@ -1,16 +1,6 @@
 .DS_Store
-carrel/*
 carrels/
-etc/carrel.*
-etc/study-carrel.db
-etc/study-carrel.sql
-etc/study-carrel.vec
-fo/*.fo
-html/*.html
-links
-pdf/*.pdf
-study-carrel/
 tei/*.xml
 tmp/
 todo/
-txt/*.txt
+xml/*.xml
