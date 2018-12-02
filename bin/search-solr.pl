@@ -9,7 +9,7 @@
 
 # configure
 use constant ROWS       => 10;
-use constant SOLR       => 'http://localhost:8983/solr/study-carrel';
+use constant SOLR       => 'http://localhost:8983/solr/carrel';
 use constant FACETFIELD => ( 'facet_did', 'facet_type', 'facet_entity', 'facet_lemma', 'facet_pos' );
 
 # require

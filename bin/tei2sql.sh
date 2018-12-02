@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 
-# sql2db.sh - given a set of previously created SQL statements, create and fill a (SQLite) database
+# tei2sql.sh - a front-end to tei2sql.py; generate SQL from a corpus
 
 # Eric Lease Morgan <eric_morgan@infomotions.com>
 # October 17, 2018 - first documentation
+# December 1, 2018 - modified for a specific carrel and to use parallel; on a plane to Oslo
 
 
 # configure
 CARRELS='./carrels'
-SCHEMA='./etc/schema.sql'
+TEI2SQL='./bin/tei2sql.py'
 
 # sanity check
 if [[ -z "$1" ]]; then
@@ -23,12 +24,13 @@ NAME=$1
 CARREL="$CARRELS/$NAME"
 ETC="$CARREL/etc"
 SQL="$ETC/$NAME.sql"
-DB="$ETC/$NAME.db"
+TEI="$CARREL/tei"
 
 # do the work
-rm -rf $DB
-cat $SCHEMA | sqlite3 $DB
-cat $SQL    | sqlite3 $DB
+rm -rf $SQL
+echo "BEGIN TRANSACTION;" > $SQL
+find $TEI -name '*.xml' | parallel $TEI2SQL {} >> $SQL
+echo "END TRANSACTION;" >> $SQL
 
 # done
 exit

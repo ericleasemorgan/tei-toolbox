@@ -1,5 +1,6 @@
 .DS_Store
 carrel/*
+carrels/
 etc/carrel.*
 etc/study-carrel.db
 etc/study-carrel.sql

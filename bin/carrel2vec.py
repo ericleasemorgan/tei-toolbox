@@ -7,10 +7,10 @@
 
 
 # configure
+CARRELS = './carrels'
 MODEL   = 'en'
-INDEX   = './etc/carrel.vec'
 MINIMUM = 2
-SIZE    = 50
+SIZE    = 25
 SG      = 1
 
 # require
@@ -23,19 +23,25 @@ import spacy
 import sys
 
 # sanity check
-if len( sys.argv ) != 3 :
-	sys.stderr.write( 'Usage: ' + sys.argv[ 0 ] + " <new|update|finish> <file>\n" )
+if len( sys.argv ) != 4 :
+	sys.stderr.write( 'Usage: ' + sys.argv[ 0 ] + " <name> <new|update|finish> <file>\n" )
 	exit()
 
+# initialize
+name    = sys.argv[ 1 ]
+carrel  = CARRELS + '/' + name
+etc     = carrel + '/etc'
+vectors = etc + '/' + name + '.vec'
+
 # check for finishing off
-process = sys.argv[ 1 ]
+process = sys.argv[ 2 ]
 if process == 'finish' :
-	index = Word2Vec.load( INDEX )
-	index.wv.save( INDEX )
+	index = Word2Vec.load( vectors )
+	index.wv.save( vectors )
 	exit()
 
 # import the data file and normalize it
-data = open( sys.argv[ 2 ] ).read()
+data = open( sys.argv[ 3 ] ).read()
 data = re.sub( '\r+', ' ', data )
 data = re.sub( '\n+', ' ', data )
 data = re.sub( ' +' , ' ', data )
@@ -66,14 +72,14 @@ for sentence in document.sents :
 # do the work, or else
 if process == 'new' :
 	index = Word2Vec( sentences, size = SIZE, min_count = MINIMUM, sg = SG )	
-	index.save( INDEX )
+	index.save( vectors )
 
 elif process == 'update' :
-	index = Word2Vec.load( INDEX )
+	index = Word2Vec.load( vectors )
 	index.train( sentences, total_examples = index.corpus_count, epochs = index.epochs )
-	index.save( INDEX )
+	index.save( vectors )
 
-else : sys.stderr.write( 'Usage: ' + sys.argv[ 0 ] + " <new|update|finish> <file>\n" )
+else : sys.stderr.write( 'Usage: ' + sys.argv[ 0 ] + " <name> <new|update|finish> <file>\n" )
 
 # done
 exit()

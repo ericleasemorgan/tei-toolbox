@@ -4,16 +4,20 @@
 
 # Eric Lease Morgan <eric_morgan@infomotions.com>
 # November 24, 2018 - first cut but took all day to write
+# December  1, 2018 - added lemma and pos to punctuation; added identifiers; on a plane to Oslo
 
 
 # configure
 MODEL    = 'en'
 ENCODING = 'UTF-8'
+TMP      = './tmp/morphadorn.xml'
+STYLE    = './etc/add-id.xsl'
 
 # require
 from lxml import etree
 import spacy
 import sys
+import os
 
 # sanity check
 if len( sys.argv ) != 2 :
@@ -54,7 +58,7 @@ for paragraph in tei.xpath( '//body//p | //body//l' ) :
 			if pos == 'PUNCT' : 
 				
 				# update the xml
-				pc = etree.SubElement( s, 'pc' )
+				pc = etree.SubElement( s, 'pc', lemma=lemma, pos=pos )
 				pc.text = token
 
 			# found a word
@@ -67,6 +71,7 @@ for paragraph in tei.xpath( '//body//p | //body//l' ) :
 		# delimit (almost all) sentences
 		if l < length : s.tail = ' '
 			
-# output and done
-print( etree.tostring( tei, xml_declaration=True, encoding=ENCODING ).decode( ENCODING ) )
+# write out to a temporary file, add id attributes, format, and done; hacky
+tei.write( TMP, xml_declaration=True, encoding=ENCODING )
+os.system( "xsltproc %s %s " % ( STYLE, TMP ) ) 
 exit()

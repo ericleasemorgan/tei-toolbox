@@ -1,11 +1,26 @@
 #!/usr/bin/env bash
 
 
+# configure
+CARRELS='./carrels'
+POS='NOUN'
+LEMMA='love'
+ENITY='PERSON'
 
-DB='./etc/carrel.db'
-POS='ADJ'
-LEMMA='power'
-ENITY='LOC'
+# sanity check
+if [[ -z "$1" ]]; then
+	echo "Usage: $0 <name>" >&2
+	exit
+fi
+
+# get input
+NAME=$1
+
+# initialize
+CARREL="$CARRELS/$NAME"
+ETC="$CARREL/etc"
+DB="$ETC/$NAME.db"
+
 
 # count &amp; tabulate pos
 echo "Parts-of-speech counts & tabulations"

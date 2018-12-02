@@ -22,6 +22,8 @@
 		
 			<head>
 	
+  				<style> :target { background-color: #ffa; } </style>
+
 				<!-- title tag -->
 				<title> 
 					<xsl:for-each select="teiHeader/fileDesc/titleStmt/title">
@@ -349,6 +351,11 @@
 	<!-- quote (quote) -->
 	<xsl:template match="quote">
 		<blockquote><xsl:apply-templates /></blockquote>
+	</xsl:template>
+
+	<!-- sentence -->
+	<xsl:template match="s">
+		<a><xsl:attribute name='name'><xsl:value-of select='./@xml:id' /></xsl:attribute><xsl:apply-templates /></a>
 	</xsl:template>
 
 	<!-- line group (lg) -->

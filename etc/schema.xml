@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<schema name="documents" version="1.6">
+<schema name="carrel" version="1.6">
   <uniqueKey>id</uniqueKey>
 
   <!-- local field types -->
@@ -38,7 +38,7 @@
   <field name="lemma"        type="text_general"  multiValued="true"   indexed="true"   stored="true"  />
   <field name="pos"          type="text_general"  multiValued="true"   indexed="true"   stored="true"  />
   <field name="sentence"     type="text_general"  multiValued="false"  indexed="true"   stored="true"  />
-  <field name="sid"          type="int"           multiValued="false"  indexed="true"   stored="true"  />
+  <field name="sid"          type="string"        multiValued="false"  indexed="true"   stored="true"  />
   <field name="type"         type="text_general"  multiValued="true"   indexed="true"   stored="true"  />
 
   <!-- cool field -->

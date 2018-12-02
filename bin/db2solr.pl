@@ -8,9 +8,11 @@
 
 
 # configure
-use constant DATABASE    => './etc/study-carrel.db';
-use constant DRIVER      => 'SQLite';
-use constant SOLR        => 'http://localhost:8983/solr/study-carrel';
+use constant CARREL   => './carrel';
+use constant ETC      => CARREL . '/etc';
+use constant DATABASE => ETC . '/carrel.db';
+use constant DRIVER   => 'SQLite';
+use constant SOLR     => 'http://localhost:8983/solr/carrel';
 
 # require
 use DBI;
