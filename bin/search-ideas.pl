@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 
-# ideas.pl - search texts and rank results according
-#            to tfidf and "great idea coefficient"
+# search-ideas.pl - search texts and rank results according to tfidf and "great idea coefficient"
 
 # Eric Lease Morgan <eric_morgan@infomotions.com>
 # April 25, 2009 - first investigations; based on search.pl
@@ -11,7 +10,7 @@
 # define
 use constant STOPWORDS => './etc/stopwords.txt';
 use constant IDEAS     => './etc/ideas.txt';
-use constant DIRECTORY => './carrel';
+use constant DIRECTORY => './carrels/homer/txt';
 
 # use/require
 use strict;

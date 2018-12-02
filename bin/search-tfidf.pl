@@ -1,7 +1,6 @@
 #!/usr/bin/perl
 
-# search.pl - search texts and rank results
-#             based on http://en.wikipedia.org/wiki/Tfidf
+# search-tfidf.pl - search texts and rank results; based on http://en.wikipedia.org/wiki/Tfidf
 
 # Eric Lease Morgan <eric_morgan@infomotions.com>
 # April 5, 2009  - first investigations
@@ -12,7 +11,7 @@
 
 
 # define
-use constant DIRECTORY => './carrel';
+use constant DIRECTORY => './carrels/homer/txt';
 
 # use/require
 use strict;
