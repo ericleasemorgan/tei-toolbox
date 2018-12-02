@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# concordance.pl - rudimentary KWIC search engine
+# search-kwik.pl - rudimentary concordance search engine
 
 # Eric Lease Morgan <eric_morgan@infomotions.com>
 # June    7, 2009 - first investigations using Lingua::Concordance
