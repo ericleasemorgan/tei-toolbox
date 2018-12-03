@@ -17,7 +17,7 @@ if ( ! $directory ) { die "Usage $0 <directory>\n" }
 # use/require
 use strict;
 use Lingua::StopWords qw( getStopWords );
-require './lib/subroutines.pl';
+require './etc/tfidf-toolbox.pl';
 
 # initialize
 my @corpus    = &corpus( $directory );

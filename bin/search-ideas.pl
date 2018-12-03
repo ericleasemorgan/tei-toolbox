@@ -14,7 +14,7 @@ use constant DIRECTORY => './carrels/homer/txt';
 
 # use/require
 use strict;
-require './lib/subroutines.pl';
+require './etc/tfidf-toolbox.pl';
 
 # get the input
 my $q = lc( $ARGV[ 0 ] );

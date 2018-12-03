@@ -12,7 +12,6 @@
 use constant LENGTH => 10;
 
 # require
-use lib '../lib';
 use Lingua::EN::Ngram;
 use strict;
 

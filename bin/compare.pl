@@ -25,7 +25,7 @@ use constant IDEAS => './etc/ideas.txt';
 # use/require
 use Lingua::StopWords qw( getStopWords );
 use strict;
-require './lib/subroutines.pl';
+require './etc/tfidf-toolbox.pl';
 
 # sanity check
 my $directory = $ARGV[ 0 ];

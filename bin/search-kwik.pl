@@ -7,7 +7,6 @@
 # August 29, 2010 - added cool bar chart
 
 # include
-use lib './lib';
 use Lingua::Concordance;
 use Text::BarGraph;
 use strict;
