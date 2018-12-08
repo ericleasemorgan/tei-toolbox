@@ -2,15 +2,15 @@ CREATE TABLE documents (
     did TEXT
 );
 
-CREATE TABLE sentences (
-    did       TEXT,
-    sid       TEXT,
-    sentence  TEXT
+CREATE TABLE paragraphs (
+    did        TEXT,
+    pid        TEXT,
+    paragraph  TEXT
 );
 
 CREATE TABLE entities (
 	did     TEXT,
-	sid     TEXT,
+	pid     TEXT,
 	eid     INTEGER,
 	entity  TEXT,
 	type    TEXT
@@ -18,7 +18,7 @@ CREATE TABLE entities (
 
 CREATE TABLE tokens (
 	did     TEXT,
-	sid     TEXT,
+	pid     TEXT,
 	tid     INTEGER,
 	token   TEXT,
 	lemma   TEXT,

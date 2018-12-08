@@ -8,11 +8,10 @@
 
 
 # configure
-use constant CARREL   => './carrel';
-use constant ETC      => CARREL . '/etc';
-use constant DATABASE => ETC . '/carrel.db';
+use constant CARRELS  => './carrels';
+use constant ETC      => '/etc';
 use constant DRIVER   => 'SQLite';
-use constant SOLR     => 'http://localhost:8983/solr/carrel';
+use constant SOLR     => 'http://localhost:8983/solr/carrels-tei';
 
 # require
 use DBI;
@@ -20,31 +19,33 @@ use strict;
 use WebService::Solr;
 
 # sanity check
-my $key = $ARGV[ 0 ];
-if ( ! $key ) { die "Usage: $0 <key>\n" }
+my $name = $ARGV[ 0 ];
+my $key  = $ARGV[ 1 ];
+if ( ! $name or ! $key ) { die "Usage: $0 <carrel> <key>\n" }
 
 # initialize
+my $carrel   = CARRELS . "/$name";
+my $database = $carrel . ETC . "/$name.db";
 my $driver   = DRIVER; 
-my $database = DATABASE;
 my $dbh      = DBI->connect( "DBI:$driver:dbname=$database", '', '', { RaiseError => 1 } ) or die $DBI::errstr;
 
 # find the given title
-my $handle = $dbh->prepare( qq(SELECT * FROM sentences WHERE did='$key';) );
+my $handle = $dbh->prepare( qq(SELECT * FROM paragraphs WHERE did='$key';) );
 $handle->execute() or die $DBI::errstr;
 
 # process each record
 while ( my $results = $handle->fetchrow_hashref ) {
 
 	# parse the data
-	my $did      = $$results{ 'did' };
-	my $sid      = $$results{ 'sid' };
-	my $sentence = $$results{ 'sentence' };
-
+	my $did       = $$results{ 'did' };
+	my $pid       = $$results{ 'pid' };
+	my $paragraph = $$results{ 'paragraph' };
+	
 	# build an identifier
-	my $id = $did . '_' . $sid;
+	my $id = $did . '_' . $pid;
 
 	# find all entities for in this sentence
-	my $subhandle = $dbh->prepare( qq(SELECT * FROM entities WHERE did='$key' AND sid='$sid';) );
+	my $subhandle = $dbh->prepare( qq(SELECT * FROM entities WHERE did='$key' AND pid='$pid';) );
 	$subhandle->execute() or die $DBI::errstr;
 	
 	# process the results
@@ -58,7 +59,7 @@ while ( my $results = $handle->fetchrow_hashref ) {
 	}
 	
 	# find all lemmas & pos for in this sentence
-	my $subhandle = $dbh->prepare( qq(SELECT * FROM tokens WHERE did='$key' AND sid='$sid' AND ( pos IS 'NOUN' OR pos IS 'VERB' OR pos IS 'ADJ' OR pos is 'ADV' OR pos is 'PRON');) );
+	my $subhandle = $dbh->prepare( qq(SELECT * FROM tokens WHERE did='$key' AND pid='$pid' AND ( pos IS 'NOUN' OR pos IS 'VERB' OR pos IS 'ADJ' OR pos is 'ADV' OR pos is 'PRON');) );
 	$subhandle->execute() or die $DBI::errstr;
 	
 	# process the results
@@ -73,10 +74,11 @@ while ( my $results = $handle->fetchrow_hashref ) {
 	
 	# debug; dump
 	binmode( STDOUT, ':utf8' );
-	warn "       did: $did\n";
-	warn "       sid: $sid\n";
-	warn "        id: $id\n";
-	warn "  sentence: $sentence\n";
+	warn "     carrel: $name\n";
+	warn "        did: $did\n";
+	warn "        pid: $pid\n";
+	warn "         id: $id\n";
+	warn "  paragraph: $paragraph\n";
 
 	# check for entities
 	if ( @entities ) {
@@ -98,18 +100,19 @@ while ( my $results = $handle->fetchrow_hashref ) {
 	
 	# delimit
 	warn "\n";
-		
+	
 	# initialize indexing
 	my $solr           = WebService::Solr->new( SOLR );
+	my $solr_carrel    = WebService::Solr::Field->new( 'carrel'    => $name );
 	my $solr_did       = WebService::Solr::Field->new( 'did'       => $did );
 	my $solr_facet_did = WebService::Solr::Field->new( 'facet_did' => $did );
-	my $solr_sid       = WebService::Solr::Field->new( 'sid'       => $sid );
+	my $solr_pid       = WebService::Solr::Field->new( 'pid'       => $pid );
 	my $solr_id        = WebService::Solr::Field->new( 'id'        => $id );
-	my $solr_sentence  = WebService::Solr::Field->new( 'sentence'  => $sentence );
+	my $solr_paragraph = WebService::Solr::Field->new( 'paragraph' => $paragraph );
 
 	# fill a solr document with simple fields
 	my $doc = WebService::Solr::Document->new;
-	$doc->add_fields( $solr_did, $solr_sid, $solr_id, $solr_sentence, $solr_facet_did );
+	$doc->add_fields( $solr_carrel, $solr_did, $solr_pid, $solr_id, $solr_paragraph, $solr_facet_did );
 
 	# add complex fields
 	foreach ( @entities ) {

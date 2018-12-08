@@ -5,39 +5,35 @@
 # Eric Lease Morgan <eric_morgan@infomotions.com>
 # April 25, 2009 - first investigations; based on search.pl
 # November 22, 2018 - fixed call to both corpus and rank to include a directory
+# December 7, 2018 - added ability to supply one's own lexicon
 
 
 # define
 use constant STOPWORDS => './etc/stopwords.txt';
-use constant IDEAS     => './etc/ideas.txt';
-use constant DIRECTORY => './carrels/homer/txt';
 
 # use/require
 use strict;
 require './etc/tfidf-toolbox.pl';
 
 # get the input
-my $q = lc( $ARGV[ 0 ] );
-if ( ! $q ) {
-
-	print "Usage: $0 <query>\n";
-	exit; 
-
-}
+my $directory = $ARGV[ 0 ];
+my $lexicon   = $ARGV[ 1 ];
+my $query     = lc( $ARGV[ 2 ] );
+if ( ! $directory or ! $lexicon or ! $query ) { die "Usage: $0 <directory> <lexicon> <word>\n" }
 
 # index, sans stopwords
 my %index = ();
-foreach my $file ( &corpus( DIRECTORY ) ) { $index{ $file } = &index( $file, &slurp_words( STOPWORDS ) ) }
+foreach my $file ( &corpus( $directory ) ) { $index{ $file } = &index( $file, &slurp_words( STOPWORDS ) ) }
 
 # search
-my ( $hits, @files ) = &search( \%index, $q );
+my ( $hits, @files ) = &search( \%index, $query );
 print "Your search found $hits hit(s)\n";
 
 # rank
-my $ranks = &rank( \%index, [ @files ], $q, DIRECTORY );
+my $ranks = &rank( \%index, [ @files ], $query, $directory );
 
 # great idea coefficients
-my $coefficients = &great_ideas( \%index, [ @files ], &slurp_words( IDEAS ) );
+my $coefficients = &great_ideas( \%index, [ @files ], &slurp_words( $lexicon ) );
 
 # combine ranks and coefficients
 my %scores = ();

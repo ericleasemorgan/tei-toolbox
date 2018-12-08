@@ -337,13 +337,23 @@
 				<p style='text-align:center'><xsl:apply-templates /></p>
 			</xsl:when>
 			<xsl:when test='./@rend = "fiction"'>
-				<p class='fiction'><xsl:text>&#160;&#160;&#160;&#160;</xsl:text><xsl:apply-templates /></p>
+				<p>
+				<xsl:attribute name='name'><xsl:value-of select='./@xml:id' /></xsl:attribute>
+				<xsl:attribute name='id'><xsl:value-of select='./@xml:id' /></xsl:attribute>
+				<xsl:attribute name='class'><xsl:text>fiction</xsl:text></xsl:attribute>
+				<xsl:text>&#160;&#160;&#160;&#160;</xsl:text>
+				<xsl:apply-templates />
+				</p>
 			</xsl:when>
 			<xsl:when test='./@rend = "pre"'>
 				<pre><xsl:apply-templates /></pre>
 			</xsl:when>
 			<xsl:otherwise>
-				<p><xsl:apply-templates /></p>
+				<p>
+				<xsl:attribute name='name'><xsl:value-of select='./@xml:id' /></xsl:attribute>
+				<xsl:attribute name='id'><xsl:value-of select='./@xml:id' /></xsl:attribute>
+				<xsl:apply-templates />
+				</p>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
@@ -355,7 +365,7 @@
 
 	<!-- sentence -->
 	<xsl:template match="s">
-		<a><xsl:attribute name='name'><xsl:value-of select='./@xml:id' /></xsl:attribute><xsl:apply-templates /></a>
+		<xsl:apply-templates />
 	</xsl:template>
 
 	<!-- line group (lg) -->

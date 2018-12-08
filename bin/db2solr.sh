@@ -10,11 +10,19 @@
 # configure
 DB2SOLR='./bin/db2solr.pl'
 
+# sanity check
+if [[ -z "$1" || -z "$2" ]]; then
+	echo "Usage: $0 <carrel> <key | file>" >&2
+	exit
+fi
+
+
 # get input
-FILE=$1
+CARREL=$1
+FILE=$2
 
 # make sane
-ID=$( basename "$FILE" .txt )
+ID=$( basename "$FILE" .xml )
 
 # do the work
-$DB2SOLR $ID
+$DB2SOLR $CARREL $ID

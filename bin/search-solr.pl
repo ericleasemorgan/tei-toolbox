@@ -1,36 +1,42 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
-# search.pl - command-line interface to search a solr instance
+# search-solr.pl - command-line interface to search a solr instance
 
 # Eric Lease Morgan <emorgan@nd.edu>
 # October 17, 2018 - first cut
 # October 20, 2018 - added entities, types, lemmas, and pos
+# December 6, 2018 - added hypertext links and ability to specify number of hits
 
 
 # configure
-use constant ROWS       => 10;
-use constant SOLR       => 'http://localhost:8983/solr/carrel';
+use constant ROWS       => 3;
+use constant SOLR       => 'http://localhost:8983/solr/carrels-tei';
 use constant FACETFIELD => ( 'facet_did', 'facet_type', 'facet_entity', 'facet_lemma', 'facet_pos' );
+use constant URL        => 'file:///Users/eric/Documents/tei-toolbox/carrels/##CARREL##/html';
+use constant HEADER     => "did\tpid\tparagraph\n";
 
 # require
 use strict;
 use WebService::Solr;
 
 # get input; sanity check
-my $query = $ARGV[ 0 ];
-if ( ! $query ) { die "Usage: $0 <query>\n" }
+my $carrel = $ARGV[ 0 ];
+my $query  = $ARGV[ 1 ];
+my $rows   = $ARGV[ 2 ];
+my $format = $ARGV[ 3 ];
+if ( ! $carrel or ! $query or ! $rows or ! $format ) { die "Usage: $0 <carrel> <query> <integer> <summary|terse|full|csv|html>\n" }
 
 # initialize
-my $solr = WebService::Solr->new( SOLR );
+my $solr =  WebService::Solr->new( SOLR );
 
 # build the search options
 my %search_options = ();
-$search_options{ 'rows' }        = ROWS;
+$search_options{ 'rows' }        = $rows;
 $search_options{ 'facet.field' } = [ FACETFIELD ];
 $search_options{ 'facet' }       = 'true';
 
 # search
-my $response = $solr->search( $query, \%search_options );
+my $response = $solr->search( "($query) AND carrel:$carrel", \%search_options );
 
 # build a list of did facets
 my @facet_did = ();
@@ -57,60 +63,182 @@ my @facet_pos = ();
 my $pos_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ facet_pos } );
 foreach my $facet ( sort { $$pos_facets{ $b } <=> $$pos_facets{ $a } } keys %$pos_facets ) { push @facet_pos, $facet . ' (' . $$pos_facets{ $facet } . ')'; }
 
-
 # get the total number of hits
 my $total = $response->content->{ 'response' }->{ 'numFound' };
 
 # get number of hits returned
 my @hits = $response->docs;
 
-# start the output
-print "Your search found $total item(s) and " . scalar( @hits ) . " items(s) are displayed.\n\n";
-print '     did facets: ', join( '; ', @facet_did ), "\n\n";
-print '     pos facets: ', join( '; ', @facet_pos ), "\n\n";
-print '    type facets: ', join( '; ', @facet_type ), "\n\n";
-print '  entity facets: ', join( '; ', @facet_entity ), "\n\n";
-print '   lemma facets: ', join( '; ', @facet_lemma ), "\n\n";
+# initialize the links
+my $url =  URL;
+$url    =~ s/##CARREL##/$carrel/;
 
-# loop through each document
-for my $doc ( $response->docs ) {
+# start the output; full/everything
+if ( $format eq 'full' ) {
+
+	print "Your search found $total item(s) and " . scalar( @hits ) . " items(s) are displayed.\n\n";
+	print '     did facets: ', join( '; ', @facet_did ), "\n\n";
+	print '     pos facets: ', join( '; ', @facet_pos ), "\n\n";
+	print '    type facets: ', join( '; ', @facet_type ), "\n\n";
+	print '  entity facets: ', join( '; ', @facet_entity ), "\n\n";
+	print '   lemma facets: ', join( '; ', @facet_lemma ), "\n\n";
+
+	# loop through each document
+	for my $doc ( $response->docs ) {
 	
-	# parse
-	my $did      = $doc->value_for( 'did' );
-	my $sid      = $doc->value_for( 'sid' );
-	my $id       = $doc->value_for( 'id' );
-	my $sentence = $doc->value_for( 'sentence' );
-	my @entities = $doc->values_for( 'entity' );
-	my @types    = $doc->values_for( 'type' );
-	my @lemmas   = $doc->values_for( 'lemma' );
-	my @pos      = $doc->values_for( 'pos' );
+		# parse
+		my $did       = $doc->value_for(  'did' );
+		my $pid       = $doc->value_for(  'pid' );
+		my $id        = $doc->value_for(  'id' );
+		my $url       = "$url/$did.html#$pid";
+		my $paragraph = $doc->value_for(  'paragraph' );
+		my @entities  = $doc->values_for( 'entity' );
+		my @types     = $doc->values_for( 'type' );
+		my @lemmas    = $doc->values_for( 'lemma' );
+		#my @pos       = $doc->values_for( 'pos' );
 					
-	# output
-	#print "       did: $did\n";
-	#print "       sid: $sid\n";
-	print "        id: $id\n";
-	print "  sentence: $sentence\n";
+		# output
+		print "        did: $did\n";
+		#print "       sid: $sid\n";
+		print "        pid: $pid\n";
+		print "        url: $url\n";
+		print "  paragraph: $paragraph\n";
 
-	# check for entities
-	if ( @entities ) {
+		# check for entities
+		if ( @entities ) {
 	
-		print "  entities: " . join( '; ', @entities ) . "\n";
-		print "     types: " . join( '; ', @types ) . "\n";
+			print "   entities: " . join( '; ', @entities ) . "\n";
+			print "      types: " . join( '; ', @types ) . "\n";
 		
-	}
+		}
 	
-	# check for entities
-	if ( @lemmas ) {
+		# check for entities
+		if ( @lemmas ) {
 	
-		print "    lemmas: " . join( '; ', @lemmas ) . "\n";
-		print "       pos: " . join( '; ', @pos ) . "\n";
+			print "     lemmas: " . join( '; ', @lemmas ) . "\n";
+			#print "       pos: " . join( '; ', @pos ) . "\n";
 		
-	}
+		}
 	
-	# delimit
+		# delimit
+		print "\n";
+	
+	}
+
+}
+
+# summary; total hits plus facet counts
+elsif ( $format eq 'summary' ) { 
+
+	print "Your search found $total item(s) and " . scalar( @hits ) . " items(s) are displayed.\n\n";
+	print '     did facets: ', join( '; ', @facet_did ), "\n\n";
+	print '     pos facets: ', join( '; ', @facet_pos ), "\n\n";
+	print '    type facets: ', join( '; ', @facet_type ), "\n\n";
+	print '  entity facets: ', join( '; ', @facet_entity ), "\n\n";
+	print '   lemma facets: ', join( '; ', @facet_lemma ), "\n\n";
 	print "\n";
 	
 }
+
+# html
+elsif ( $format eq 'html' ) { 
+
+	# summary
+	my $summary = '<ul>';
+	$summary = $summary . "<li><b>did</b>: "   . join( '; ', @facet_did )    . '</li>';
+	$summary = $summary . "<li><b>pos</b>: "    . join( '; ', @facet_pos )    . '</li>';
+	$summary = $summary . "<li><b>type</b>: "   . join( '; ', @facet_type )   . '</li>';
+	$summary = $summary . "<li><b>entity</b>: " . join( '; ', @facet_entity ) . '</li>';
+	$summary = $summary . "<li><b>lemma</b>: "  . join( '; ', @facet_lemma )  . '</li>';
+	$summary = $summary . '</ul>';
+	
+	
+	# loop through each document
+	my $results = '<ol>';
+	for my $doc ( $response->docs ) {
+			
+		# parse
+		my $did       = $doc->value_for(  'did' );
+		my $pid       = $doc->value_for(  'pid' );
+		my $id        = $doc->value_for(  'id' );
+		my $url       = "$url/$did.html#$pid";
+		my $paragraph = $doc->value_for(  'paragraph' );
+		my @entities  = $doc->values_for( 'entity' );
+		my @types     = $doc->values_for( 'type' );
+		my @lemmas    = $doc->values_for( 'lemma' );
+		#my @pos       = $doc->values_for( 'pos' );
+					
+		# output
+		$results = $results . "<li style='margin-bottom: 1em'>$paragraph";
+		$results = $results . "<ul>";
+		$results = $results . "<li><b>did</b>: $did</li>";
+		$results = $results . "<li><b>pid</b>: <a href='$url'>$pid</a></li>";
+
+		# check for entities
+		if ( @entities ) {
+	
+			$results = $results . "<li><b>entities</b>: " . join( '; ', @entities ) . '</li>';
+			$results = $results . "<li><b>types</b>: "    . join( '; ', @types ) . '</li>';
+		
+		}
+	
+		# check for entities
+		if ( @lemmas ) { $results = $results . "<li><b>lemmas</b>: " . join( '; ', @lemmas ) . '</li>' }
+	
+		# delimit
+		$results = $results . "</ul></li>";
+	
+	}
+
+	# finish off the search results
+	$results = $results . '</ol>';
+
+	# build the output & done
+	my $html =  &template;
+	$html    =~ s/##TOTAL##/$total/e;
+	$html    =~ s/##HITS##/scalar( @hits )/e;
+	$html    =~ s/##RESULTS##/$results/e;
+	$html    =~ s/##SUMMARY##/$summary/e;
+	print $html;
+
+}
+
+# csv
+elsif ( $format eq 'csv' ) { 
+
+	# output a header
+	print HEADER;
+
+	# loop through each document
+	for my $doc ( $response->docs ) {
+	
+		# parse & output
+		my $did       = $doc->value_for( 'did' );
+		my $pid       = $doc->value_for( 'pid' );
+		my $paragraph = $doc->value_for( 'paragraph' );
+		print "$did\t$pid\t$paragraph\n";
+
+	}
+	
+}
+
+# terse; just paragraphs
+elsif ( $format eq 'terse' ) { 
+
+	# loop through each document
+	for my $doc ( $response->docs ) {
+	
+		# parse
+		my $paragraph = $doc->value_for(  'paragraph' );
+		print "$paragraph\n";
+		print "\n";
+	
+	}
+
+ }
+
+# error
+else { die "Usage: $0 <carrel> <query> <integer> <summary|terse|full|csv|html>\n" }
 
 # done
 exit;
@@ -134,6 +262,30 @@ sub get_facets {
 	
 	return \%facets;
 	
+}
+
+sub template {
+
+	return <<EOF;
+<html>
+<head>
+<title>Search results</title>
+</head>
+<body style='margin: 3%'>
+<h1>Search results</h1>
+
+<p>Your search found ##TOTAL## item(s) and ##HITS## items(s) are displayed.</p>
+
+<h2>Facets</h2>
+##SUMMARY##
+
+<h2>Results</h2>
+##RESULTS##
+
+</body>
+</html>
+EOF
+
 }
 
 

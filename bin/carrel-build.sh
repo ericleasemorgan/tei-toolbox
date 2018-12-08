@@ -28,7 +28,7 @@ find $CARREL -name *.xml | parallel ./bin/tei2html.sh {} $NAME
 find $CARREL -name *.xml | parallel ./bin/tei2pdf.sh  {} $NAME
 ./bin/tei2sql.sh    $NAME
 ./bin/sql2db.sh     $NAME
-./bin/report.sh     $NAME
+./bin/search-db.sh  $NAME NOUN love PERSON
 ./bin/carrel2vec.sh $NAME
 ./bin/search-vec.py $NAME $QUERY
 

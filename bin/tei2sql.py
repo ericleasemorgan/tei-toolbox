@@ -29,32 +29,38 @@ did = tei.xpath( '/TEI/teiHeader/fileDesc/publicationStmt/idno' )[ 0 ].text
 print( "INSERT INTO documents ( did ) VALUES ( '" + did + "' );" )
 
 # process each sentence
-for sentence in tei.xpath( '//s' ) :
+for paragraph in tei.xpath( '//body//p' ) :
 	
 	# re-initialize
-	sid  = sentence.xpath( './@xml:id' )[ 0 ]
+	pid  = paragraph.xpath( './@xml:id' )[ 0 ]
 	text = ''
 	tid  = 0
 	
-	# process each token in the sentence
-	for item in sentence.xpath( './/w | .//pc' ) :
+	# process each sentence
+	for sentence in paragraph.xpath( './s' ) :
+	
+		# process each token in the sentence
+		for item in sentence.xpath( './/w | .//pc' ) :
 		
-		# increment and parse
-		tid   += 1
-		token  = item.xpath( 'normalize-space(.)' )
-		lemma  = item.xpath( './@lemma' )[ 0 ]
-		pos    = item.xpath( './@pos' )[ 0 ]
+			# increment and parse
+			tid   += 1
+			token  = item.xpath( 'normalize-space(.)' )
+			lemma  = item.xpath( './@lemma' )[ 0 ]
+			pos    = item.xpath( './@pos' )[ 0 ]
 		
-		# escape
-		token = re.sub( "'", "''", token )
-		lemma = re.sub( "'", "''", lemma )
+			# escape
+			token = re.sub( "'", "''", token )
+			lemma = re.sub( "'", "''", lemma )
 
-		# output 
-		print( "INSERT INTO tokens ( did, sid, tid, token, lemma, pos ) VALUES ( '%s', '%s', '%s', '%s', '%s', '%s' );" % ( did, sid, str( tid ), token, lemma, pos ) )
+			# output 
+			print( "INSERT INTO tokens ( did, pid, tid, token, lemma, pos ) VALUES ( '%s', '%s', '%s', '%s', '%s', '%s' );" % ( did, pid, str( tid ), token, lemma, pos ) )
 		
-		# build the sentence
-		text = text + item.text
+			# build the sentence
+			text = text + item.text
 
+		# delimite sentences
+		text = text + ' '
+	
 	# extract named entities from the text; better if they were in the xml
 	sentence = nlp( text )
 	eid      = 0
@@ -65,11 +71,11 @@ for sentence in tei.xpath( '//s' ) :
 		entity  = item.text
 		entity  = re.sub( "'", "''", entity )
 		type    = item.label_
-		print( "INSERT INTO entities ( did, sid, eid, entity, type ) VALUES ( '%s', '%s', '%s', '%s', '%s' );" % ( did, sid, str( eid), entity, type ) )
+		print( "INSERT INTO entities ( did, pid, eid, entity, type ) VALUES ( '%s', '%s', '%s', '%s', '%s' );" % ( did, pid, str( eid), entity, type ) )
 
 	# escape and output
 	text  = re.sub( "'", "''", text )
-	print( "INSERT INTO sentences ( did, sid, sentence ) VALUES ( '%s', '%s', '%s' );" % ( did, sid, text ) )
+	print( "INSERT INTO paragraphs ( did, pid, paragraph ) VALUES ( '%s', '%s', '%s' );" % ( did, pid, text ) )
 
 # done
 exit()

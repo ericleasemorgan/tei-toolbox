@@ -4,8 +4,16 @@
 # configure
 MORPHADORN='./bin/morphadorn.py'
 
-ID=$1
-ID=$( basename $ID .xml)
+# sanity check
+if [[ -z "$1"  ]]; then
+	echo "Usage: $0 <id>" >&2
+	exit
+fi
+
+# get input
+NAME=$1
+
+ID=$( basename $NAME .xml)
 
 XML="./xml/$ID.xml"
 TEI="./tei/$ID.xml"
