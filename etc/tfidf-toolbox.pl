@@ -1,16 +1,55 @@
-# subroutines.pl - a library of functions used to index,
-#                  classify, and compare documents as well
-#                  as rank search results
+# tfidf-toolbox.pl - a library of functions used to index, classify, and compare documents as well as rank search results
 
 # Eric Lease Morgan <eric_morgan@infomotions.com>
 
-# April 10, 2009 - first investigations
-# April 11, 2009 - added stopwords; efficient-ized
-# April 12, 2009 - added dynamic corpus
-# April 16, 2009 - added dot product and Euclidian length
-# April 17, 2009 - added compare
-# April 25, 2009 - added great_idea
-# May   31, 2009 - added cosine to compare routine, dumb!
+# April   10, 2009 - first investigations
+# April   11, 2009 - added stopwords; efficient-ized
+# April   12, 2009 - added dynamic corpus
+# April   16, 2009 - added dot product and Euclidian length
+# April   17, 2009 - added compare
+# April   25, 2009 - added great_idea
+# May     31, 2009 - added cosine to compare routine, dumb!
+# December 8, 2018 - added measurements for each idea
+
+
+# measure tfidf scores for a given lexicon
+sub measure {
+
+	# get input
+	my $index = shift;
+	my $files = shift;
+	my $ideas = shift;
+	
+	# initialize
+	my %measurements = ();
+	
+	# process each file
+	foreach $file ( @$files ) {
+	
+		my $words = $$index{ $file };
+		my %ideas = ();
+		
+		# process each big idea
+		foreach my $idea ( keys %$ideas ) {
+		
+			# get n and t for tdidf
+			my $n = $$words{ $idea };
+			my $t = 0;
+			foreach my $word ( keys %$words ) { $t = $t + $$words{ $word } }
+			
+			# calculate; sum all tfidf scores for all ideas
+			$ideas{ $idea } = &tfidf( $n, $t, scalar( keys %$index ), scalar @$files );
+			
+		}
+	
+		# build up the measurements
+		$measurements{ $file } = \%ideas;
+	}
+	
+	# done
+	return \%measurements;
+	
+}
 
 
 # score documents based on sets of keywords -- big names or great ideas
