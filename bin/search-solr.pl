@@ -3,15 +3,16 @@
 # search-solr.pl - command-line interface to search a solr instance
 
 # Eric Lease Morgan <emorgan@nd.edu>
-# October 17, 2018 - first cut
-# October 20, 2018 - added entities, types, lemmas, and pos
-# December 6, 2018 - added hypertext links and ability to specify number of hits
+# October 17, 2018  - first cut
+# October 20, 2018  - added entities, types, lemmas, and pos
+# December 6, 2018  - added hypertext links and ability to specify number of hits
+# December 11, 2018 - adding more facets
 
 
 # configure
 use constant ROWS       => 3;
 use constant SOLR       => 'http://localhost:8983/solr/carrels-tei';
-use constant FACETFIELD => ( 'facet_did', 'facet_type', 'facet_entity', 'facet_lemma', 'facet_pos' );
+use constant FACETFIELD => ( 'facet_did', 'facet_type', 'facet_entity', 'facet_lemma', 'facet_pos', 'facet_person', 'facet_loc', 'facet_gpe' );
 use constant URL        => 'file:///Users/eric/Documents/tei-toolbox/carrels/##CARREL##/html';
 use constant HEADER     => "did\tpid\tparagraph\n";
 
@@ -63,6 +64,21 @@ my @facet_pos = ();
 my $pos_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ facet_pos } );
 foreach my $facet ( sort { $$pos_facets{ $b } <=> $$pos_facets{ $a } } keys %$pos_facets ) { push @facet_pos, $facet . ' (' . $$pos_facets{ $facet } . ')'; }
 
+# build a list of person facets
+my @facet_person = ();
+my $person_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ facet_person } );
+foreach my $facet ( sort { $$person_facets{ $b } <=> $$person_facets{ $a } } keys %$person_facets ) { push @facet_person, $facet . ' (' . $$person_facets{ $facet } . ')'; }
+
+# build a list of LOC facets
+my @facet_loc = ();
+my $loc_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ facet_loc } );
+foreach my $facet ( sort { $$loc_facets{ $b } <=> $$loc_facets{ $a } } keys %$loc_facets ) { push @facet_loc, $facet . ' (' . $$loc_facets{ $facet } . ')'; }
+
+# build a list of LOC facets
+my @facet_gpe = ();
+my $gpe_facets = &get_facets( $response->facet_counts->{ facet_fields }->{ facet_gpe } );
+foreach my $facet ( sort { $$gpe_facets{ $b } <=> $$gpe_facets{ $a } } keys %$gpe_facets ) { push @facet_gpe, $facet . ' (' . $$gpe_facets{ $facet } . ')'; }
+
 # get the total number of hits
 my $total = $response->content->{ 'response' }->{ 'numFound' };
 
@@ -77,11 +93,14 @@ $url    =~ s/##CARREL##/$carrel/;
 if ( $format eq 'full' ) {
 
 	print "Your search found $total item(s) and " . scalar( @hits ) . " items(s) are displayed.\n\n";
-	print '     did facets: ', join( '; ', @facet_did ), "\n\n";
-	print '     pos facets: ', join( '; ', @facet_pos ), "\n\n";
-	print '    type facets: ', join( '; ', @facet_type ), "\n\n";
-	print '  entity facets: ', join( '; ', @facet_entity ), "\n\n";
-	print '   lemma facets: ', join( '; ', @facet_lemma ), "\n\n";
+	print '       did facets: ', join( '; ', @facet_did ), "\n\n";
+	print '       pos facets: ', join( '; ', @facet_pos ), "\n\n";
+	print '      type facets: ', join( '; ', @facet_type ), "\n\n";
+	print '    entity facets: ', join( '; ', @facet_entity ), "\n\n";
+	print '     lemma facets: ', join( '; ', @facet_lemma ), "\n\n";
+	print '    person facets: ', join( '; ', @facet_person ), "\n\n";
+	print '       GPE facets: ', join( '; ', @facet_gpe ), "\n\n";
+	print '  location facets: ', join( '; ', @facet_loc ), "\n\n";
 
 	# loop through each document
 	for my $doc ( $response->docs ) {
@@ -131,11 +150,14 @@ if ( $format eq 'full' ) {
 elsif ( $format eq 'summary' ) { 
 
 	print "Your search found $total item(s) and " . scalar( @hits ) . " items(s) are displayed.\n\n";
-	print '     did facets: ', join( '; ', @facet_did ), "\n\n";
-	print '     pos facets: ', join( '; ', @facet_pos ), "\n\n";
-	print '    type facets: ', join( '; ', @facet_type ), "\n\n";
-	print '  entity facets: ', join( '; ', @facet_entity ), "\n\n";
-	print '   lemma facets: ', join( '; ', @facet_lemma ), "\n\n";
+	print '       did facets: ', join( '; ', @facet_did ), "\n\n";
+	print '       pos facets: ', join( '; ', @facet_pos ), "\n\n";
+	print '      type facets: ', join( '; ', @facet_type ), "\n\n";
+	print '    entity facets: ', join( '; ', @facet_entity ), "\n\n";
+	print '     lemma facets: ', join( '; ', @facet_lemma ), "\n\n";
+	print '    person facets: ', join( '; ', @facet_person ), "\n\n";
+	print '       GPE facets: ', join( '; ', @facet_gpe ), "\n\n";
+	print '  location facets: ', join( '; ', @facet_loc ), "\n\n";
 	print "\n";
 	
 }
@@ -145,11 +167,14 @@ elsif ( $format eq 'html' ) {
 
 	# summary
 	my $summary = '<ul>';
-	$summary = $summary . "<li><b>did</b>: "   . join( '; ', @facet_did )    . '</li>';
-	$summary = $summary . "<li><b>pos</b>: "    . join( '; ', @facet_pos )    . '</li>';
-	$summary = $summary . "<li><b>type</b>: "   . join( '; ', @facet_type )   . '</li>';
-	$summary = $summary . "<li><b>entity</b>: " . join( '; ', @facet_entity ) . '</li>';
-	$summary = $summary . "<li><b>lemma</b>: "  . join( '; ', @facet_lemma )  . '</li>';
+	$summary = $summary . "<li><b>did</b>: "      . join( '; ', @facet_did )    . '</li>';
+	$summary = $summary . "<li><b>pos</b>: "      . join( '; ', @facet_pos )    . '</li>';
+	$summary = $summary . "<li><b>type</b>: "     . join( '; ', @facet_type )   . '</li>';
+	$summary = $summary . "<li><b>entity</b>: "   . join( '; ', @facet_entity ) . '</li>';
+	$summary = $summary . "<li><b>lemma</b>: "    . join( '; ', @facet_lemma )  . '</li>';
+	$summary = $summary . "<li><b>person</b>: "   . join( '; ', @facet_person )  . '</li>';
+	$summary = $summary . "<li><b>GPE</b>: "      . join( '; ', @facet_gpe )  . '</li>';
+	$summary = $summary . "<li><b>location</b>: " . join( '; ', @facet_loc )  . '</li>';
 	$summary = $summary . '</ul>';
 	
 	

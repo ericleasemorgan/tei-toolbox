@@ -55,9 +55,23 @@ while ( my $results = $handle->fetchrow_hashref ) {
 	
 		push( @entities, $$subresults{ 'entity' } );
 		push( @types, $$subresults{ 'type' } );
+		
 	
 	}
 	
+	# find all specific types of entities
+	my %types = ();
+	foreach my $type ( @types ) {
+	
+		$subhandle = $dbh->prepare( qq(SELECT * FROM entities WHERE did='$key' AND pid='$pid' AND type='$type';) );
+		$subhandle->execute() or die $DBI::errstr;
+
+		my @items = ();
+		while ( my $subresults = $subhandle->fetchrow_hashref ) { push( @items, $$subresults{ 'entity' } ) }
+		$types{ $type } = \@items;
+		
+	}
+
 	# find all lemmas & pos for in this sentence
 	my $subhandle = $dbh->prepare( qq(SELECT * FROM tokens WHERE did='$key' AND pid='$pid' AND ( pos IS 'NOUN' OR pos IS 'VERB' OR pos IS 'ADJ' OR pos is 'ADV' OR pos is 'PRON');) );
 	$subhandle->execute() or die $DBI::errstr;
@@ -87,6 +101,14 @@ while ( my $results = $handle->fetchrow_hashref ) {
 		warn "  entities: " . join( '; ', @entities ) . "\n";
 		warn "     types: " . join( '; ', @types ) . "\n";
 		
+	}
+	
+	# specific entity types
+	foreach my $type ( keys( %types ) ) {
+	
+		my $items = $types{ $type };		
+		warn "     $type: " . join( '; ', sort( @$items ) ) . "\n";
+			
 	}
 	
 	# check for lemmas
@@ -127,6 +149,33 @@ while ( my $results = $handle->fetchrow_hashref ) {
 
 		$doc->add_fields(( WebService::Solr::Field->new( 'type'       => $_ )));
 		$doc->add_fields(( WebService::Solr::Field->new( 'facet_type' => $_ )));
+	
+	}
+
+	# add persons
+	my $persons = $types{ 'PERSON' };
+	foreach ( @$persons ) {
+
+		$doc->add_fields(( WebService::Solr::Field->new( 'person'       => $_ )));
+		$doc->add_fields(( WebService::Solr::Field->new( 'facet_person' => $_ )));
+	
+	}
+
+	# add gpe
+	my $gpes = $types{ 'GPE' };
+	foreach ( @$gpes ) {
+
+		$doc->add_fields(( WebService::Solr::Field->new( 'gpe'       => $_ )));
+		$doc->add_fields(( WebService::Solr::Field->new( 'facet_gpe' => $_ )));
+	
+	}
+
+	# add loc
+	my $locs = $types{ 'LOC' };
+	foreach ( @$locs ) {
+
+		$doc->add_fields(( WebService::Solr::Field->new( 'loc'       => $_ )));
+		$doc->add_fields(( WebService::Solr::Field->new( 'facet_loc' => $_ )));
 	
 	}
 

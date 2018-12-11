@@ -8,7 +8,7 @@ ID=$1
 ID=$( basename $ID .xml)
 
 
-TEI="./tei/$ID.xml"
+TEI="./xml/$ID.xml"
 mv $TEI $TRASH
 xmllint --format "$TRASH/$ID.xml" > $TEI
 
