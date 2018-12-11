@@ -12,6 +12,7 @@ MODEL    = 'en'
 ENCODING = 'UTF-8'
 TMP      = './tmp/morphadorn.xml'
 STYLE    = './etc/add-id.xsl'
+MAX      = 1600000
 
 # require
 from lxml import etree
@@ -27,6 +28,7 @@ if len( sys.argv ) != 2 :
 # initialize
 tei = etree.parse( sys.argv[ 1 ] )
 nlp = spacy.load( MODEL )
+nlp.max_length = MAX
 
 # process each paragraph
 for paragraph in tei.xpath( '//body//p | //body//l' ) :

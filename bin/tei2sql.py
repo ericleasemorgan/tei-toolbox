@@ -8,6 +8,7 @@
 
 # configure
 MODEL = 'en'
+MAX      = 1600000
 
 # require
 from lxml import etree
@@ -23,6 +24,7 @@ if len( sys.argv ) != 2 :
 # initialize
 tei = etree.parse( sys.argv[ 1 ] )
 nlp = spacy.load( MODEL )
+nlp.max_length = MAX
 
 # compute a document id and output
 did = tei.xpath( '/TEI/teiHeader/fileDesc/publicationStmt/idno' )[ 0 ].text
