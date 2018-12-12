@@ -19,6 +19,10 @@ if ( ! $file or ! $key) { die "Usage: $0 <file> <key>\n" }
 my $txt = &slurp( $file );
 my $xml = &slurp( TEMPLATE );
 
+$txt =~ s/&/&amp;/g;
+$txt =~ s/</&lt;/g;
+$txt =~ s/>/&gt;/g;
+
 # do the necessary substitutions
 $xml =~ s/##BODY##/$txt/;
 $xml =~ s/##IDNO##/$key/;
