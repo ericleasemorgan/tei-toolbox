@@ -50,7 +50,7 @@ data = re.sub( '$\W+', '', data )
 
 # model the data
 nlp            = spacy.load( MODEL )
-nlp.max_length = 1200000
+nlp.max_length = 1500000
 document       = nlp( data )
 
 # initialize the stop words and the sentences
