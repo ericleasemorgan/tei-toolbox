@@ -11,12 +11,12 @@
         </respStmt>
       </titleStmt>
       <publicationStmt>
-        <publisher>Infomotions, LLC</publisher>
+        <publisher>##PUBLISHER##</publisher>
         <address>
-        	<addrLine>eric_morgan@infomotions.com</addrLine>
+        	<addrLine>##EMAIL##></addrLine>
         </address>
-        <idno type='elm'>##IDNO</idno>
-        <availability status='free'>
+        <idno>##IDNO##</idno>
+        <availability>
           <p>##LICENSE##</p>
         </availability>
       </publicationStmt>
@@ -33,7 +33,7 @@
   <text>
     <front />
     <body>
-		<p>Hello, World!</p>
+		<p>##BODY##</p>
     </body>
     <back />
   </text>
