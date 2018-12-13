@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-# file2txt.sh - given a file, output plain text; a front-end to file2txt.py
+# txt2xml.sh - given a file, output a rudimentary TEI file; a front-end to txt2xml.pl
 
 
 # configure
-FILE2TXT='./bin/file2txt.py'
-DIRECTORY='./txt'
+TXT2XML='./bin/txt2xml.pl'
+DIRECTORY='./xml'
 
 # sanity check
 if [[ -z "$1" ]]; then
@@ -19,8 +19,8 @@ FILE=$1
 # initialize
 BASENAME=$( basename $FILE )
 BASENAME=${BASENAME%.*}
-OUTPUT="$DIRECTORY/$BASENAME.txt"
+OUTPUT="$DIRECTORY/$BASENAME.xml"
 
 # do the work and done
-$FILE2TXT $FILE > $OUTPUT
+$TXT2XML $FILE $BASENAME > $OUTPUT
 exit

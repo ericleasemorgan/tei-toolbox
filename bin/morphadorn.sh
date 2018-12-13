@@ -13,7 +13,7 @@ fi
 # get input
 NAME=$1
 
-ID=$( basename $NAME .xml)
+ID=$( basename $NAME .xml )
 
 XML="./xml/$ID.xml"
 TEI="./tei/$ID.xml"

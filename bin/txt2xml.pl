@@ -4,8 +4,7 @@
 
 
 # configure
-use constant TEMPLATE  => './etc/template.xml';
-use constant DIRECTORY => './xml';
+use constant TEMPLATE => './etc/template.xml';
 
 # require
 use strict;
@@ -19,21 +18,17 @@ if ( ! $file or ! $key) { die "Usage: $0 <file> <key>\n" }
 my $txt = &slurp( $file );
 my $xml = &slurp( TEMPLATE );
 
+# escape necessary entities
 $txt =~ s/&/&amp;/g;
 $txt =~ s/</&lt;/g;
 $txt =~ s/>/&gt;/g;
 
-# do the necessary substitutions
+# build the xml
 $xml =~ s/##BODY##/$txt/;
 $xml =~ s/##IDNO##/$key/;
 
-# configure output and save
-my $output = DIRECTORY . "/$key.xml";
-open( XML, " > $output" ) or die "Can't open $output ($!)\n";
-print XML $xml;
-close( XML );
-
-# done
+# output and don
+print $xml;
 exit;
 
 
