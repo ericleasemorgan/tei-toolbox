@@ -8,7 +8,7 @@
 
 # configure
 CARRELS = './carrels'
-N       = 25
+N       = 10
 
 # require
 from gensim.models import KeyedVectors

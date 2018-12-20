@@ -29,7 +29,7 @@ my $basename = basename( $xml, SUFFIXES );
 binmode( STDOUT, ":utf8" );
 
 # get and process each chapter
-my $chapters = $xpath->find( '//body//p' );
+my $chapters = $xpath->find( '//body//div' );
 foreach my $chapter ( $chapters->get_nodelist ) {
 
 	# create a filename 
