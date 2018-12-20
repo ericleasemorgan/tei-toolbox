@@ -3,3 +3,4 @@ carrels/
 tei/*.xml
 tmp/
 xml/*.xml
+txt/*.txt
