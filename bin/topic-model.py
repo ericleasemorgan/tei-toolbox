@@ -7,11 +7,10 @@
 
 
 # configure
-TOPICS     = 7
-DIMENSIONS = 3
+TOPICS     = 6
+DIMENSIONS = 5
 ITERATIONS = 40
-DIRECTORY  = './carrel'
-EXTRAS     = [ 'upon', 'would', 'one', 'though' ]
+EXTRAS     = [ 'upon', 'would', 'one', 'though', 'could', 'yet', 'thy', 'shall', 'still' ]
 
 # require
 from gensim import corpora
@@ -32,13 +31,19 @@ def clean( document ):
 	features = [ lemma.lemmatize( feature ) for feature in features ]
 	return features
 
+# sanity check
+if len( sys.argv ) != 2 :
+	sys.stderr.write( 'Usage: ' + sys.argv[ 0 ] + " <directory>\n" )
+	exit()
+
+
 # initialize
 lemma     = WordNetLemmatizer()
 stopwords = stopwords.words( 'english' )
 for word in EXTRAS : stopwords.append( word )
 
 # given a directory of files, create and normalize a set of documents
-directory = DIRECTORY
+directory = sys.argv[ 1 ]
 documents = []
 for item in os.listdir( directory ) :
 	file = os.path.join( directory, item )

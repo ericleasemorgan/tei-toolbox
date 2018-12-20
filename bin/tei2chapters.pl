@@ -26,9 +26,10 @@ if ( ! $xml or ! $directory ) { die "Usage: $0 <xml file> <output directory\n" }
 my $xpath    = XML::XPath->new( filename => $xml );
 my $count    = 0;
 my $basename = basename( $xml, SUFFIXES );
+binmode( STDOUT, ":utf8" );
 
 # get and process each chapter
-my $chapters = $xpath->find( '//body//div' );
+my $chapters = $xpath->find( '//body//p' );
 foreach my $chapter ( $chapters->get_nodelist ) {
 
 	# create a filename 
@@ -37,6 +38,7 @@ foreach my $chapter ( $chapters->get_nodelist ) {
 	
 	# open, save, and close a file
 	open( OUT, " > $directory/$filename" ) or die "Can't open file ($!). Call Eric.\n";
+	binmode( OUT, ":utf8" );
 	print OUT $chapter->string_value, "\n";
 	close OUT;
 	
