@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<schema name="carrel" version="1.6">
+<schema name="carrels-tei" version="1.6">
   <uniqueKey>id</uniqueKey>
 
   <!-- local field types -->
@@ -27,18 +27,25 @@
   <field name="_version_" type="long"         indexed="true"      stored="false"/>
   
   <!-- my fields -->
+  <field name="carrel"       type="string"        multiValued="false"  indexed="true"   stored="true"  />
   <field name="did"          type="text_general"  multiValued="false"  indexed="true"   stored="true"  />
   <field name="entity"       type="text_general"  multiValued="true"   indexed="true"   stored="true"  />
   <field name="facet_did"    type="string"        multiValued="false"  indexed="true"   stored="true"  />
   <field name="facet_entity" type="string"        multiValued="true"   indexed="true"   stored="true"  />
+  <field name="facet_gpe"    type="string"        multiValued="true"   indexed="true"   stored="true"  />
   <field name="facet_lemma"  type="string"        multiValued="true"   indexed="true"   stored="true"  />
+  <field name="facet_loc"    type="string"        multiValued="true"   indexed="true"   stored="true"  />
+  <field name="facet_person" type="string"        multiValued="true"   indexed="true"   stored="true"  />
   <field name="facet_pos"    type="string"        multiValued="true"   indexed="true"   stored="true"  />
   <field name="facet_type"   type="string"        multiValued="true"   indexed="true"   stored="true"  />
+  <field name="gpe"          type="text_general"  multiValued="true"   indexed="true"   stored="true"  />
   <field name="id"           type="string"        multiValued="false"  indexed="true"   stored="true"  />
   <field name="lemma"        type="text_general"  multiValued="true"   indexed="true"   stored="true"  />
+  <field name="loc"          type="text_general"  multiValued="true"   indexed="true"   stored="true"  />
+  <field name="paragraph"    type="text_general"  multiValued="false"  indexed="true"   stored="true"  />
+  <field name="person"       type="text_general"  multiValued="true"   indexed="true"   stored="true"  />
+  <field name="pid"          type="string"        multiValued="false"  indexed="true"   stored="true"  />
   <field name="pos"          type="text_general"  multiValued="true"   indexed="true"   stored="true"  />
-  <field name="sentence"     type="text_general"  multiValued="false"  indexed="true"   stored="true"  />
-  <field name="sid"          type="string"        multiValued="false"  indexed="true"   stored="true"  />
   <field name="type"         type="text_general"  multiValued="true"   indexed="true"   stored="true"  />
 
   <!-- cool field -->
