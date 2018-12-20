@@ -8,5 +8,5 @@ ID=$1
 ID=$( basename $ID .xml)
 
 
-TEI="./xml/$ID.xml"
+TEI="./tei/$ID.xml"
 xmllint --noout --dtdvalid $DTD $TEI
