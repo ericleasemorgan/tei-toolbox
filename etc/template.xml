@@ -33,7 +33,7 @@
   <text>
     <front />
     <body>
-	<p>##BODY##</p>
+	<div><p>##BODY##</p></div>
     </body>
     <back />
   </text>
