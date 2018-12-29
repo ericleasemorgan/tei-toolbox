@@ -8,8 +8,8 @@
 
 
 # define
-use constant LOWERBOUNDS  => .01;
-use constant EXTRAS       => ( 'upon', 'one', 'though', 'will', 'shall' );
+use constant LOWERBOUNDS  => .001;
+use constant EXTRAS       => ( 'upon', 'one', 'though', 'will', 'shall', 'yet', 'thus', 'thou' );
 
 my $directory = $ARGV[ 0 ];
 if ( ! $directory ) { die "Usage $0 <directory>\n" }

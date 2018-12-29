@@ -7,10 +7,10 @@
 
 
 # configure
-TOPICS     = 6
-DIMENSIONS = 5
+TOPICS     = 4
+DIMENSIONS = 7
 ITERATIONS = 40
-EXTRAS     = [ 'upon', 'would', 'one', 'though', 'could', 'yet', 'thy', 'shall', 'still' ]
+EXTRAS     = [ 'upon', 'would', 'one', 'though', 'could', 'yet', 'thy', 'shall', 'still', 'u' ]
 
 # require
 from gensim import corpora
