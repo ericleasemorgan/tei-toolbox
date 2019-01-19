@@ -6,10 +6,12 @@
 # August    28, 2010 - first cut; for a blog posting
 # August    29, 2010 - tweeked to accept command-line input
 # September 12, 2010 - tweaked for use by Lingua::EN::Ngram
+# January 19, 2019   - changed definition of punctuation and added stopword functionality
 
 
 # denote the number of ngrams to display; season to taste
-use constant LENGTH => 10;
+use constant LENGTH    => 25;
+use constant STOPWORDS => './etc/stopwords.txt';
 
 # require
 use Lingua::EN::Ngram;
@@ -25,6 +27,13 @@ if ( ! $file or ! $size ) {
 	
 }
 
+# initialize stopwords
+my %stopwords = ();
+my $stopwords = STOPWORDS;
+open( WORDS , " < $stopwords" ) or die "Can't open $stopwords ($!)\n";
+while ( <WORDS> ) { chop; $stopwords{ $_ }++; }
+close( WORDS );
+
 # initialize and count ngrams
 my $ngram = Lingua::EN::Ngram->new( file => $file );
 my $ngrams = $ngram->ngram( $size );
@@ -35,14 +44,25 @@ foreach my $phrase ( sort { $$ngrams{ $b } <=> $$ngrams{ $a } } keys %$ngrams ) 
 	
 	# check for punctuation in each token of phrase
 	my $found = 0;
-	foreach ((split / /, $phrase )) {
+	foreach ( (split / /, lc( $phrase ) ) ) {
 	
-		if ( $_ =~ /[,.?!:;()\-]/ ) {
+		if ( $_ =~ /[[:punct:]]/ ) {
 		
 			$found = 1;
 			last;
 			
 		}
+		
+		if ( $size < 3 ) {
+		
+			if ( $stopwords{ $_ } ) {
+			
+				$found = 1;
+				last;
+
+			}
+		
+		}		
 		
 	}
 	
