@@ -28,14 +28,14 @@ if ( $parts eq 'chapters' ) { $pattern = '//div[@type="chapter"]' }
 else { $pattern = '//text//p|//text//lg' }
 
 # get the document identifier
-my $docid = $xpath->findvalue( '/TEI.2/teiHeader/fileDesc/publicationStmt/idno' );
+my $docid = $xpath->findvalue( '/TEI/teiHeader/fileDesc/publicationStmt/idno' );
 
 # process each section (part)
 my $sections = $xpath->find( $pattern );
 foreach my $section ( $sections->get_nodelist ) {
 
 	# get the section identifier
-	my $cid = $section->findvalue( './@id' );
+	my $cid = $section->findvalue( './@xml:id' );
 	
 	# save the chapter to a file
 	my $filename = "$directory/$docid$cid.txt";

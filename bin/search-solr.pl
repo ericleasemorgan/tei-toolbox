@@ -13,7 +13,7 @@
 use constant ROWS       => 3;
 use constant SOLR       => 'http://localhost:8983/solr/carrels-tei';
 use constant FACETFIELD => ( 'facet_did', 'facet_type', 'facet_entity', 'facet_lemma', 'facet_pos', 'facet_person', 'facet_loc', 'facet_gpe' );
-use constant URL        => 'file:///Users/eric/Documents/tei-toolbox/carrels/##CARREL##/html';
+use constant URL        => 'file:///Users/emorgan/Documents/tei-toolbox/carrels/##CARREL##/html';
 use constant HEADER     => "did\tpid\tparagraph\n";
 
 # require

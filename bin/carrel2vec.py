@@ -10,7 +10,7 @@
 CARRELS = './carrels'
 MODEL   = 'en'
 MINIMUM = 2
-SIZE    = 10
+SIZE    = 100
 SG      = 1
 
 # require
