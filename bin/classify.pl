@@ -8,7 +8,7 @@
 
 
 # define
-use constant LOWERBOUNDS  => .001;
+use constant LOWERBOUNDS  => .1;
 use constant EXTRAS       => ( 'upon', 'one', 'though', 'will', 'shall', 'yet', 'thus', 'thou' );
 
 my $directory = $ARGV[ 0 ];

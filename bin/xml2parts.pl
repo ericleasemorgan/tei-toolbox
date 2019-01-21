@@ -38,8 +38,9 @@ foreach my $section ( $sections->get_nodelist ) {
 	my $cid = $section->findvalue( './@xml:id' );
 	
 	# save the chapter to a file
-	my $filename = "$directory/$docid$cid.txt";
+	my $filename = "$directory/$docid-$cid.txt";
 	open( OUT, " >  $filename" ) or die "Can't open $filename ($!). Call Eric.\n";
+	binmode( OUT, ':utf8' );
 	print OUT $section->string_value;
 	close OUT;
 		

@@ -10,7 +10,7 @@
 TOPICS     = 4
 DIMENSIONS = 7
 ITERATIONS = 40
-EXTRAS     = [ 'upon', 'would', 'one', 'though', 'could', 'yet', 'thy', 'shall', 'still', 'u' ]
+EXTRAS     = [ 'upon', 'would', 'one', 'though', 'could', 'yet', 'thy', 'shall', 'still', 'u', 'every' ]
 
 # require
 from gensim import corpora
@@ -32,10 +32,14 @@ def clean( document ):
 	return features
 
 # sanity check
-if len( sys.argv ) != 2 :
-	sys.stderr.write( 'Usage: ' + sys.argv[ 0 ] + " <directory>\n" )
+if len( sys.argv ) != 4 :
+	sys.stderr.write( 'Usage: ' + sys.argv[ 0 ] + " <directory> <topics> <dimensions>\n" )
 	exit()
 
+# get input
+directory  = sys.argv[ 1 ]
+topics     = int( sys.argv[ 2 ] )
+dimensions = int( sys.argv[ 3 ] )
 
 # initialize
 lemma     = WordNetLemmatizer()
@@ -43,7 +47,6 @@ stopwords = stopwords.words( 'english' )
 for word in EXTRAS : stopwords.append( word )
 
 # given a directory of files, create and normalize a set of documents
-directory = sys.argv[ 1 ]
 documents = []
 for item in os.listdir( directory ) :
 	file = os.path.join( directory, item )
@@ -55,10 +58,10 @@ matrix     = [ dictionary.doc2bow( document ) for document in documents ]
 
 # initialize an LDA model, and then do the work
 lda   = gensim.models.ldamodel.LdaModel
-model = lda( matrix, num_topics = TOPICS, id2word = dictionary, passes = ITERATIONS )
+model = lda( matrix, num_topics = topics, id2word = dictionary, passes = ITERATIONS )
 
 # output each topic in the resulting model
-for topic in model.show_topics( num_topics = -1, num_words = DIMENSIONS, formatted = False ) :
+for topic in model.show_topics( num_topics = -1, num_words = dimensions, formatted = False ) :
 	id = topic[ 0 ]
 	print( id )
 	for item in topic[ 1 ] :
