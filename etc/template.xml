@@ -30,10 +30,10 @@
       </creation>
     </profileDesc>
   </teiHeader>
-  <text>
+  <text xml:space="preserve">
     <front />
     <body>
-	<div><p>##BODY##</p></div>
+	<p>##BODY##</p>
     </body>
     <back />
   </text>
