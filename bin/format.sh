@@ -2,7 +2,7 @@
 
 
 # configure
-TRASH="./trash"
+TRASH="./tmp"
 
 ID=$1
 ID=$( basename $ID .xml)
